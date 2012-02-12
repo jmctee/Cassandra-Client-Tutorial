@@ -9,8 +9,8 @@ public class TestEmbeddedCassandra {
 
     private static final String embeddedCassandraHostname = "localhost";
     private static final Integer embeddedCassandraPort = 9160;
-    private static final String embeddedCassandraKeySpaceName = "Schools"; //new UUID(0,255).toString().replace("-","");
-    private static final String columnFamilyName = "Courses";
+    private static final String embeddedCassandraKeySpaceName = "TestKeyspaceName";
+    private static final String columnFamilyName = "TestColumnName";
     private static final String configurationPath = "/tmp/cassandra";
 
     @Test

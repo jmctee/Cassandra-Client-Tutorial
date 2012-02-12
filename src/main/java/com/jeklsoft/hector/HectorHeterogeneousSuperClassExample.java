@@ -1,21 +1,17 @@
 package com.jeklsoft.hector;
 
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import me.prettyprint.cassandra.serializers.*;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import me.prettyprint.cassandra.serializers.BooleanSerializer;
-import me.prettyprint.cassandra.serializers.ByteBufferSerializer;
-import me.prettyprint.cassandra.serializers.DateSerializer;
-import me.prettyprint.cassandra.serializers.DoubleSerializer;
-import me.prettyprint.cassandra.serializers.LongSerializer;
-import me.prettyprint.cassandra.serializers.StringSerializer;
-import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.Keyspace;
@@ -29,38 +25,51 @@ import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SuperSliceQuery;
 
 /*
-Cluster: Education
+Cluster: SensorNet
 
-Keyspace: "Schools" {
-    CF<super column>: Courses {
-      school_uuid : {
-        Courses : {
-          course_uuid : {
-            <start date> : {
-              "CourseName" : <String, "course name">,
-              "numberEnrolled" : <Long, value>,
-              "graduateLevel" : <Boolean, 1/0>,
-              "passRate" : <Double, percent passed>,
-              "meetingTime" : <Date, time of class, e.g., 8 AM>
+Keyspace: "Climate" {
+    CF<supercolumn>: "Sensors" {
+        sensor_uuid: {
+            <timestamp> : {
+                "Temperature" : <Double>
+                "WindSpeed" : <Integer>
+                "WindDirection" : <String>
+                "Humidity" : <BigInteger>
+                "BadAirQualityDetected" : <Boolean>
             }
 
             ...
 
-            <start date> : {
-              "CourseName" : <String, "course name">,
-              "numberEnrolled" : <Long, value>,
-              "graduateLevel" : <Boolean, 1/0>,
-              "passRate" : <Double, percent passed>,
-              "meetingTime" : <Date, time of class, e.g., 8 AM>
+            <timestamp> : {
+                "Temperature" : <Double>
+                "WindSpeed" : <Integer>
+                "WindDirection" : <String>
+                "Humidity" : <BigInteger>
+                "BadAirQualityDetected" : <Boolean>
             }
-          }
+        }
 
-          ...
+        ...
 
-          course_uuid : {
+        sensor_uuid: {
+            <timestamp> : {
+                "Temperature" : <Double>
+                "WindSpeed" : <Integer>
+                "WindDirection" : <String>
+                "Humidity" : <BigInteger>
+                "BadAirQualityDetected" : <Boolean>
+            }
+
             ...
-          }
-      }
+
+            <timestamp> : {
+                "Temperature" : <Double>
+                "WindSpeed" : <Integer>
+                "WindDirection" : <String>
+                "Humidity" : <BigInteger>
+                "BadAirQualityDetected" : <Boolean>
+            }
+        }
     }
 }
 */
@@ -69,21 +78,24 @@ public class HectorHeterogeneousSuperClassExample {
 
     private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperClassExample.class);
 
+    private static final String configurationPath = "/tmp/cassandra";
     private static final String embeddedCassandraHostname = "localhost";
     private static final Integer embeddedCassandraPort = 9160;
-    private static final String embeddedCassandraKeySpaceName = "Schools"; //new UUID(0,255).toString().replace("-","");
-    private static final String embeddedCassandraClusterName = "Education";
-    private static final String columnFamilyName = "Courses";
-    private static final String configurationPath = "/tmp/cassandra";
+    private static final String embeddedCassandraKeySpaceName = "Climate";
+    private static final String embeddedCassandraClusterName = "SensorNet";
+    private static final String columnFamilyName = "Sensors";
+
     private static final Serializer genericOutputSerializer = ExtendedTypeInferringSerializer.get();
     private static final Serializer ss = StringSerializer.get();
     private static final Serializer us = UUIDSerializer.get();
-    private static final String courseNameColumnName = "CourseName";
-    private static final String numberEnrolledColumnName = "NumberEnrolled";
-    private static final String graduateLevelColumnName = "GraduateLevel";
-    private static final String passRateColumnName = "PassRate";
-    private static final String meetingTimeColumnName = "MeetingTime";
+    private static final Serializer ls = LongSerializer.get();
 
+    private static final String temperatureNameColumnName = "Temperature";
+    private static final String windSpeedNameColumnName = "WindSpeed";
+    private static final String windDirectionNameColumnName = "WindDirection";
+    private static final String humidityNameColumnName = "Humidity";
+    private static final String badAirQualityDetectedNameColumnName = "BadAirQualityDetected";
+    
     private final Keyspace keyspace;
 
     public HectorHeterogeneousSuperClassExample()
@@ -93,6 +105,7 @@ public class HectorHeterogeneousSuperClassExample {
             List<String> cassandraCommands = new ArrayList<String>();
             cassandraCommands.add("create keyspace " + embeddedCassandraKeySpaceName + ";");
             cassandraCommands.add("use " + embeddedCassandraKeySpaceName + ";");
+//            cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super' and comparator = 'LongType';");
             cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
 
             EmbeddedCassandra embeddedCassandra = new EmbeddedCassandra();
@@ -114,117 +127,111 @@ public class HectorHeterogeneousSuperClassExample {
         }
     }
 
-    public void addCourse(Course course)
+    public void addReading(final Reading reading)
     {
-        List<Course> courses = new ArrayList<Course>();
-        courses.add(course);
+        List<Reading> readings = new ArrayList<Reading>();
+        readings.add(reading);
 
-        addCourses(courses);
+        addReadings(readings);
     }
 
-    public void addCourses(List<Course> courses)
+    public void addReadings(final List<Reading> readings)
     {
         Mutator mutator = HFactory.createMutator(keyspace, genericOutputSerializer);
 
-        for (Course course : courses)
+        for (Reading reading : readings)
         {
-            HColumn courseNameColumn = HFactory.createColumn(courseNameColumnName,
-                    course.getCourseName(),
+            HColumn temperatureColumn = HFactory.createColumn(temperatureNameColumnName,
+                    reading.getTemperature(),
                     genericOutputSerializer,
                     genericOutputSerializer);
-            HColumn numberEnrolledColumn = HFactory.createColumn(numberEnrolledColumnName,
-                    course.getEnrollmentCount(),
+            HColumn windSpeedColumn = HFactory.createColumn(windSpeedNameColumnName,
+                    reading.getWindSpeed(),
                     genericOutputSerializer,
                     genericOutputSerializer);
-            HColumn graduateLevelColumn = HFactory.createColumn(graduateLevelColumnName,
-                    course.isGraduateLevel(),
+            HColumn windDirectionColumn = HFactory.createColumn(windDirectionNameColumnName,
+                    reading.getDirection(),
                     genericOutputSerializer,
                     genericOutputSerializer);
-            HColumn passRateColumn = HFactory.createColumn(passRateColumnName,
-                    course.getPassRate(),
+            HColumn humidityColumn = HFactory.createColumn(humidityNameColumnName,
+                    reading.getHumidity(),
                     genericOutputSerializer,
                     genericOutputSerializer);
-            HColumn meetingTimeColumn = HFactory.createColumn(meetingTimeColumnName,
-                    course.getMeetingTime(),
+            HColumn badAirQualityDetectedColumn = HFactory.createColumn(badAirQualityDetectedNameColumnName,
+                    reading.getBadAirQualityDetected(),
                     genericOutputSerializer,
                     genericOutputSerializer);
 
             List columnList = new ArrayList();
-            columnList.add(courseNameColumn);
-            columnList.add(numberEnrolledColumn);
-            columnList.add(graduateLevelColumn);
-            columnList.add(passRateColumn);
-            columnList.add(meetingTimeColumn);
+            columnList.add(temperatureColumn);
+            columnList.add(windSpeedColumn);
+            columnList.add(windDirectionColumn);
+            columnList.add(humidityColumn);
+            columnList.add(badAirQualityDetectedColumn);
 
-            HSuperColumn superColumn = HFactory.createSuperColumn(course.getCourseId(),
+            HSuperColumn superColumn = HFactory.createSuperColumn(reading.getTimestamp().getTime(),
                     columnList,
                     genericOutputSerializer,
                     genericOutputSerializer,
                     genericOutputSerializer);
 
-            mutator.addInsertion(course.getSchoolId(), columnFamilyName, superColumn);
+            mutator.addInsertion(reading.getSensorId(), columnFamilyName, superColumn);
         }
 
         mutator.execute();
     }
 
-    public List<Course> queryForCourseListById(UUID schoolId, UUID courseLowerRange, UUID courseUpperRange, int maxToReturn)
+    public List<Reading> querySensorReadingsByTime(UUID sensorId, Date startingDate, Date endingDate, int maxToReturn)
     {
-        SuperSliceQuery query = HFactory.createSuperSliceQuery(keyspace, us, us, ss, ByteBufferSerializer.get());
+        SuperSliceQuery query = HFactory.createSuperSliceQuery(keyspace, us, ls, ss, ByteBufferSerializer.get());
 
-        query.setColumnFamily(columnFamilyName).setKey(schoolId).setRange(courseLowerRange, courseUpperRange, false, maxToReturn);
+        query.setColumnFamily(columnFamilyName).setKey(sensorId).setRange(startingDate.getTime(), endingDate.getTime(), false, maxToReturn);
 
         QueryResult<SuperSlice<UUID, String, ByteBuffer>> result = query.execute();
 
         List<HSuperColumn<UUID, String, ByteBuffer>> rows = result.get().getSuperColumns();
 
-        List<Course> courses = new ArrayList<Course>();
+        List<Reading> readings = new ArrayList<Reading>();
 
         for (HSuperColumn row : rows)
         {
-            Course course = getCourseFromSuperColumn(schoolId, row);
-            courses.add(course);
+            Reading reading = getReadingFromSuperColumn(sensorId, row);
+            readings.add(reading);
         }
-        return courses;
+        return readings;
     }
 
-    private Course getCourseFromSuperColumn(UUID schoolId, HSuperColumn row)
+    private Reading getReadingFromSuperColumn(UUID sensorId, HSuperColumn row)
     {
-        final String courseNameColumnName = "CourseName";
-        final String numberEnrolledColumnName = "NumberEnrolled";
-        final String graduateLevelColumnName = "GraduateLevel";
-        final String passRateColumnName = "PassRate";
-        final String meetingTimeColumnName = "MeetingTime";
-
-        UUID courseId = (UUID)row.getName();
-        String courseName = null;
-        Long enrollmentCount = null;
-        Boolean graduateLevel = null;
-        Double passRate = null;
-        Date meetingTime = null;
+        Date timestamp = new Date((Long)row.getName());
+        Double temperature = null;
+        Integer windSpeed = null;
+        String direction = null;
+        BigInteger humidity = null;
+        Boolean badAirQualityDetected = null;
 
         List<HColumn<String, ByteBuffer>> columns = row.getColumns();
         for(HColumn<String, ByteBuffer> column : columns)
         {
-            if (courseNameColumnName.equals(column.getName()))
+            if (temperatureNameColumnName.equals(column.getName()))
             {
-                courseName = StringSerializer.get().fromByteBuffer(column.getValue());
+                temperature = DoubleSerializer.get().fromByteBuffer(column.getValue());
             }
-            else if (numberEnrolledColumnName.equals(column.getName()))
+            else if (windSpeedNameColumnName.equals(column.getName()))
             {
-                enrollmentCount = LongSerializer.get().fromByteBuffer(column.getValue());
+                windSpeed = IntegerSerializer.get().fromByteBuffer(column.getValue());
             }
-            else if (graduateLevelColumnName.equals(column.getName()))
+            else if (windDirectionNameColumnName.equals(column.getName()))
             {
-                graduateLevel = BooleanSerializer.get().fromByteBuffer(column.getValue());
+                direction = StringSerializer.get().fromByteBuffer(column.getValue());
             }
-            else if (passRateColumnName.equals(column.getName()))
+            else if (humidityNameColumnName.equals(column.getName()))
             {
-                passRate = DoubleSerializer.get().fromByteBuffer(column.getValue());
+                humidity = BigIntegerSerializer.get().fromByteBuffer(column.getValue());
             }
-            else if (meetingTimeColumnName.equals(column.getName()))
+            else if (badAirQualityDetectedNameColumnName.equals(column.getName()))
             {
-                meetingTime = DateSerializer.get().fromByteBuffer(column.getValue());
+                badAirQualityDetected = BooleanSerializer.get().fromByteBuffer(column.getValue());
             }
             else
             {
@@ -232,14 +239,15 @@ public class HectorHeterogeneousSuperClassExample {
             }
         }
 
-        if ((courseId == null) || (courseName == null) ||
-            (enrollmentCount == null) || (graduateLevel == null) ||
-            (passRate == null) || (meetingTime == null))
+        // TODO: use assertion here
+        if ((temperature == null) || (windSpeed == null) ||
+            (direction == null) || (humidity == null) ||
+            (badAirQualityDetected == null))
         {
             throw new RuntimeException("Missing Columns");
         }
 
-        Course course = new Course(schoolId, courseId, courseName, enrollmentCount, graduateLevel, passRate, meetingTime);
-        return course;
+        Reading reading = new Reading(sensorId, timestamp, temperature, windSpeed, direction, humidity, badAirQualityDetected);
+        return reading;
     }
 }

@@ -3,6 +3,7 @@ package com.jeklsoft.hector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,30 +17,50 @@ public class TestHectorHeterogeneousSuperClassExample {
     public void testHectorAccess() throws Exception {
         HectorHeterogeneousSuperClassExample example = new HectorHeterogeneousSuperClassExample();
 
-        List<Course> courses = new ArrayList<Course>();
-        courses.add(new Course(new UUID(0,100), new UUID(0,1), "Basket Weaving", new Long(25), false, new Double(0.17), new Date(0,0,1,8,0)));
-        courses.add(new Course(new UUID(0,100), new UUID(0,2), "Walking And Chewing Gum", new Long(23), false, new Double(0.45), new Date(0,0,1,14,30)));
-        courses.add(new Course(new UUID(0,100), new UUID(0,3), "Navel Gazing", new Long(2), true, new Double(0.50), new Date(0,0,1,12,0)));
-        courses.add(new Course(new UUID(0,100), new UUID(0,4), "Staring Blankly", new Long(0), true, new Double(0.0), new Date(0,0,1,13,0)));
+        UUID sensorId1 = new UUID(0,100);
+        UUID sensorId2 = new UUID(0,200);
 
-        courses.add(new Course(new UUID(0,200), new UUID(0,1), "Basket Weaving", new Long(25), false, new Double(0.17), new Date(0,0,1,8,0)));
-        courses.add(new Course(new UUID(0,200), new UUID(0,2), "Walking And Chewing Gum", new Long(23), false, new Double(0.45), new Date(0,0,1,14,30)));
-        courses.add(new Course(new UUID(0,200), new UUID(0,3), "Navel Gazing", new Long(2), true, new Double(0.50), new Date(0,0,1,12,0)));
-        courses.add(new Course(new UUID(0,200), new UUID(0,4), "Staring Blankly", new Long(0), true, new Double(0.0), new Date(0,0,1,13,0)));
+        Date baseDate = new Date();
+        int readingInterval = 15 * 60 * 1000; // 15 minutes
 
-        List<Course> expectedCourses = new ArrayList<Course>();
-        expectedCourses.add(new Course(new UUID(0,100), new UUID(0,2), "Walking And Chewing Gum", new Long(23), false, new Double(0.45), new Date(0,0,1,14,30)));
-        expectedCourses.add(new Course(new UUID(0,100), new UUID(0,3), "Navel Gazing", new Long(2), true, new Double(0.50), new Date(0,0,1,12,0)));
+        List<Reading> readings = new ArrayList<Reading>();
 
-        example.addCourses(courses);
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 0)), 23.0, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 1)), 23.1, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 2)), 23.2, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 3)), 23.3, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 4)), 23.4, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 5)), 23.5, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 6)), 23.6, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 7)), 23.7, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 8)), 23.8, 16, "W", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 9)), 23.9, 16, "W", BigInteger.valueOf(17L), false));
 
-        List<Course> returnedCourses = example.queryForCourseListById(new UUID(0,100), new UUID(0,2), new UUID(0,3), 10);
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 0)), 19.5, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 1)), 19.4, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 2)), 19.3, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 3)), 19.2, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 4)), 19.1, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 5)), 19.0, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 6)), 18.9, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 7)), 18.8, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 8)), 18.7, 24, "ESE", BigInteger.valueOf(17L), false));
+        readings.add(new Reading(sensorId2, new Date(baseDate.getTime() + (readingInterval * 9)), 18.6, 24, "ESE", BigInteger.valueOf(17L), false));
 
-        assertEquals(expectedCourses.size(), returnedCourses.size());
+        List<Reading> expectedReadings = new ArrayList<Reading>();
+        expectedReadings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 4)), 23.4, 16, "W", BigInteger.valueOf(17L), false));
+        expectedReadings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 5)), 23.5, 16, "W", BigInteger.valueOf(17L), false));
+        expectedReadings.add(new Reading(sensorId1, new Date(baseDate.getTime() + (readingInterval * 6)), 23.6, 16, "W", BigInteger.valueOf(17L), false));
 
-        for (Course expectedCourse : expectedCourses)
+        example.addReadings(readings);
+
+        List<Reading> returnedReadings = example.querySensorReadingsByTime(sensorId1, new Date(baseDate.getTime() + (readingInterval * 4)), new Date(baseDate.getTime() + (readingInterval * 6)), 10);
+
+        assertEquals(expectedReadings.size(), returnedReadings.size());
+
+        for (Reading expectedReading : expectedReadings)
         {
-            assertTrue(returnedCourses.contains(expectedCourse));
+            assertTrue(returnedReadings.contains(expectedReading));
         }
     }
 }

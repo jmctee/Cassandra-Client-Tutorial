@@ -41,7 +41,8 @@ public class EmbeddedCassandra {
         if (cassandraConfigDirPath != null)
         {
             File configFile = new File(cassandraConfigDirPath);
-            System.setProperty("cassandra.config", "file:" + configFile.getPath() + "/cassandra.yaml");
+            String configFileName = "file:" + configFile.getPath() + "/cassandra.yaml";
+            System.setProperty("cassandra.config", configFileName);
         }
         else
         {

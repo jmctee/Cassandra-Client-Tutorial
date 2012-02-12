@@ -102,10 +102,11 @@ public class HectorHeterogeneousSuperClassExample {
     {
         try
         {
+            ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+
             List<String> cassandraCommands = new ArrayList<String>();
             cassandraCommands.add("create keyspace " + embeddedCassandraKeySpaceName + ";");
             cassandraCommands.add("use " + embeddedCassandraKeySpaceName + ";");
-//            cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super' and comparator = 'LongType';");
             cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
 
             EmbeddedCassandra embeddedCassandra = new EmbeddedCassandra();

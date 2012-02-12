@@ -228,6 +228,8 @@ public class TestExtendedTypeInferringSerializer {
     @Test
     public void bigIntegerObjectShouldReturnBigIntegerByteBuffer()
     {
+        ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+
         BigInteger value = BigInteger.valueOf(0x0807060504030201L);
 
         byte[] array = value.toByteArray();

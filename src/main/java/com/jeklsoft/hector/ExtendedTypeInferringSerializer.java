@@ -17,12 +17,12 @@ public class ExtendedTypeInferringSerializer<T> extends AbstractSerializer<T> im
 
   @Override
   public ByteBuffer toByteBuffer(T obj) {
-    return ExtendedSerializerTypeInferer.getSerializer(obj).toByteBuffer(obj);
+    return ExtensibleTypeInferrringSerializer.getSerializer(obj).toByteBuffer(obj);
   }
 
   @Override
   public T fromByteBuffer(ByteBuffer byteBuffer) {
     throw new IllegalStateException(
-        "The type inferring serializer can only be used for data going to the database, and not data coming from the database");
+        "The type inferring serializer can only be used for data being written to and not data read from the data store");
   }
 }

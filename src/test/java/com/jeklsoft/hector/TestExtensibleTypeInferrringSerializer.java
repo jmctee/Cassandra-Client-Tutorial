@@ -25,20 +25,20 @@ import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.cassandra.serializers.BytesArraySerializer;
 import me.prettyprint.hector.api.Serializer;
 
-public class TestExtendedSerializerTypeInferer {
+public class TestExtensibleTypeInferrringSerializer {
     //    UUID
     @Test
     public void uuidObjectShouldReturnUUIDSerializer()
     {
         UUID value = new UUID(0,1);
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), UUIDSerializer.class);
     }
 
     @Test
     public void uuidClassShouldReturnUUIDSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(UUID.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(UUID.class);
         assertEquals(serializer.getClass(), UUIDSerializer.class);
     }
 
@@ -47,14 +47,14 @@ public class TestExtendedSerializerTypeInferer {
     public void stringObjectShouldReturnStringSerializer()
     {
         String value = "test";
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), StringSerializer.class);
     }
 
     @Test
     public void stringClassShouldReturnStringSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(String.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(String.class);
         assertEquals(serializer.getClass(), StringSerializer.class);
     }
 
@@ -63,7 +63,7 @@ public class TestExtendedSerializerTypeInferer {
     public void longValueShouldReturnLongSerializer()
     {
         long value = 1L;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), LongSerializer.class);
     }
 
@@ -71,14 +71,14 @@ public class TestExtendedSerializerTypeInferer {
     public void longObjectShouldReturnLongSerializer()
     {
         Long value = 1L;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), LongSerializer.class);
     }
 
     @Test
     public void longClassShouldReturnLongSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Long.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Long.class);
         assertEquals(serializer.getClass(), LongSerializer.class);
     }
 
@@ -87,7 +87,7 @@ public class TestExtendedSerializerTypeInferer {
     public void intValueShouldReturnIntegerSerializer()
     {
         int value = 1;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), IntegerSerializer.class);
     }
 
@@ -95,14 +95,14 @@ public class TestExtendedSerializerTypeInferer {
     public void intObjectShouldReturnIntegerSerializer()
     {
         Integer value = 1;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), IntegerSerializer.class);
     }
 
     @Test
     public void intClassShouldReturnIntegerSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Integer.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Integer.class);
         assertEquals(serializer.getClass(), IntegerSerializer.class);
     }
 
@@ -111,7 +111,7 @@ public class TestExtendedSerializerTypeInferer {
     public void booleanValueShouldReturnBooleanSerializer()
     {
         boolean value = true;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), BooleanSerializer.class);
     }
 
@@ -119,14 +119,14 @@ public class TestExtendedSerializerTypeInferer {
     public void booleanObjectShouldReturnBooleanSerializer()
     {
         Boolean value = true;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), BooleanSerializer.class);
     }
 
     @Test
     public void booleanClassShouldReturnBooleanSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Boolean.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Boolean.class);
         assertEquals(serializer.getClass(), BooleanSerializer.class);
     }
 
@@ -135,7 +135,7 @@ public class TestExtendedSerializerTypeInferer {
     public void doubleValueShouldReturnDoubleSerializer()
     {
         double value = 1.0;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), DoubleSerializer.class);
     }
 
@@ -143,14 +143,14 @@ public class TestExtendedSerializerTypeInferer {
     public void doubleObjectShouldReturnDoubleSerializer()
     {
         Double value = 1.0;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), DoubleSerializer.class);
     }
 
     @Test
     public void doubleClassShouldReturnDoubleSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Double.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Double.class);
         assertEquals(serializer.getClass(), DoubleSerializer.class);
     }
 
@@ -159,7 +159,7 @@ public class TestExtendedSerializerTypeInferer {
     public void floatValueShouldReturnFloatSerializer()
     {
         float value = 1.0F;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), FloatSerializer.class);
     }
 
@@ -167,14 +167,14 @@ public class TestExtendedSerializerTypeInferer {
     public void floatObjectShouldReturnFloatSerializer()
     {
         Float value = 1.0F;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), FloatSerializer.class);
     }
 
     @Test
     public void floatClassShouldReturnFloatSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Float.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Float.class);
         assertEquals(serializer.getClass(), FloatSerializer.class);
     }
 
@@ -183,7 +183,7 @@ public class TestExtendedSerializerTypeInferer {
     public void shortValueShouldReturnShortSerializer()
     {
         short value = 1;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), ShortSerializer.class);
     }
 
@@ -191,14 +191,14 @@ public class TestExtendedSerializerTypeInferer {
     public void shortObjectShouldReturnShortSerializer()
     {
         Short value = 1;
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), ShortSerializer.class);
     }
 
     @Test
     public void shortClassShouldReturnShortSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Short.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Short.class);
         assertEquals(serializer.getClass(), ShortSerializer.class);
     }
 
@@ -207,14 +207,14 @@ public class TestExtendedSerializerTypeInferer {
     public void byteArrayObjectShouldReturnBytesArraySerializer()
     {
         byte[] value = {1,2,3};
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), BytesArraySerializer.class);
     }
 
     @Test
     public void byteArrayClassShouldReturnBytesArraySerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(byte[].class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(byte[].class);
         assertEquals(serializer.getClass(), BytesArraySerializer.class);
     }
 
@@ -224,14 +224,14 @@ public class TestExtendedSerializerTypeInferer {
     {
         ByteBuffer value = ByteBuffer.allocate(1);
         value.put(new Integer(1).byteValue());
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), ByteBufferSerializer.class);
     }
 
     @Test
     public void byteBufferClassShouldReturnByteBufferSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(ByteBuffer.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(ByteBuffer.class);
         assertEquals(serializer.getClass(), ByteBufferSerializer.class);
     }
 
@@ -240,14 +240,14 @@ public class TestExtendedSerializerTypeInferer {
     public void dateObjectShouldReturnDateSerializer()
     {
         Date value = new Date();
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), DateSerializer.class);
     }
 
     @Test
     public void dateClassShouldReturnDateSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Date.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Date.class);
         assertEquals(serializer.getClass(), DateSerializer.class);
     }
 
@@ -256,14 +256,16 @@ public class TestExtendedSerializerTypeInferer {
     public void bigIntegerObjectShouldReturnBigIntegerSerializer()
     {
         BigInteger value = BigInteger.valueOf(1);
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), BigIntegerSerializer.class);
     }
 
     @Test
     public void bigIntegerClassShouldReturnBigIntegerSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(BigInteger.class);
+        ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(BigInteger.class);
         assertEquals(serializer.getClass(), BigIntegerSerializer.class);
     }
 
@@ -272,14 +274,14 @@ public class TestExtendedSerializerTypeInferer {
     public void objectObjectShouldReturnObjectSerializer()
     {
         Object value = new Object();
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), ObjectSerializer.class);
     }
 
     @Test
     public void objectClassShouldReturnObjectSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(Object.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Object.class);
         assertEquals(serializer.getClass(), ObjectSerializer.class);
     }
 
@@ -290,14 +292,14 @@ public class TestExtendedSerializerTypeInferer {
     {
         List value = new ArrayList();
         value.add(1);
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), ObjectSerializer.class);
     }
 
     @Test
     public void unsupportedClassShouldReturnObjectSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(ArrayList.class);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(ArrayList.class);
         assertEquals(serializer.getClass(), ObjectSerializer.class);
     }
 
@@ -305,7 +307,7 @@ public class TestExtendedSerializerTypeInferer {
     @Test
     public void nullObjectShouldReturnByteBufferSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer((Object)null);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer((Object) null);
         assertEquals(serializer.getClass(), ByteBufferSerializer.class);
     }
 
@@ -313,7 +315,7 @@ public class TestExtendedSerializerTypeInferer {
     @Test
     public void nullClassShouldReturnByteBufferSerializer()
     {
-        Serializer serializer = ExtendedSerializerTypeInferer.getSerializer(null);
+        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(null);
         assertEquals(serializer.getClass(), ByteBufferSerializer.class);
     }
 }

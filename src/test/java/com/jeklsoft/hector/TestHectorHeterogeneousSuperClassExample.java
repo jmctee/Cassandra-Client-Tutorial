@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import org.junit.Test;
 
 public class TestHectorHeterogeneousSuperClassExample {

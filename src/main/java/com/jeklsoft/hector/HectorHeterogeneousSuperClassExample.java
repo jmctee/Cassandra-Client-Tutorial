@@ -30,6 +30,7 @@ import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SuperSliceQuery;
+import org.joda.time.DateTime;
 
 /*
 Cluster: SensorNet
@@ -110,6 +111,7 @@ public class HectorHeterogeneousSuperClassExample {
         try
         {
             ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+            ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
 
             List<String> cassandraCommands = new ArrayList<String>();
             cassandraCommands.add("create keyspace " + embeddedCassandraKeySpaceName + ";");

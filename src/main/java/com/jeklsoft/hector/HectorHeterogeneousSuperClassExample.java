@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import me.prettyprint.cassandra.serializers.StringSerializer;
@@ -19,8 +18,6 @@ import me.prettyprint.cassandra.serializers.ByteBufferSerializer;
 import me.prettyprint.cassandra.serializers.IntegerSerializer;
 import me.prettyprint.cassandra.serializers.BooleanSerializer;
 
-import me.prettyprint.cassandra.service.CassandraHostConfigurator;
-import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.Serializer;
 import me.prettyprint.hector.api.beans.HColumn;
@@ -87,13 +84,6 @@ public class HectorHeterogeneousSuperClassExample {
 
     private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperClassExample.class);
 
-    private static final String configurationPath = "/tmp/cassandra";
-    private static final String embeddedCassandraHostname = "localhost";
-    private static final Integer embeddedCassandraPort = 9160;
-    private static final String embeddedCassandraKeySpaceName = "Climate";
-    private static final String embeddedCassandraClusterName = "SensorNet";
-    private static final String columnFamilyName = "Sensors";
-
     private static final Serializer genericOutputSerializer = ExtendedTypeInferringSerializer.get();
     private static final Serializer ss = StringSerializer.get();
     private static final Serializer us = UUIDSerializer.get();
@@ -106,37 +96,16 @@ public class HectorHeterogeneousSuperClassExample {
     private static final String badAirQualityDetectedNameColumnName = "BadAirQualityDetected";
     
     private final Keyspace keyspace;
+    private final String columnFamilyName;
 
-    public HectorHeterogeneousSuperClassExample()
+    public HectorHeterogeneousSuperClassExample(Keyspace keyspace, String columnFamilyName)
     {
-        try
-        {
-            ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
-            ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
-            ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
+        this.keyspace = keyspace;
+        this.columnFamilyName = columnFamilyName;
 
-            List<String> cassandraCommands = new ArrayList<String>();
-            cassandraCommands.add("create keyspace " + embeddedCassandraKeySpaceName + ";");
-            cassandraCommands.add("use " + embeddedCassandraKeySpaceName + ";");
-            cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
-
-            EmbeddedCassandra embeddedCassandra = new EmbeddedCassandra();
-            embeddedCassandra.setCleanCassandra(true);
-            embeddedCassandra.setCassandraStartupCommands(cassandraCommands);
-            embeddedCassandra.setHostname(embeddedCassandraHostname);
-            embeddedCassandra.setHostport(embeddedCassandraPort);
-            embeddedCassandra.setCassandraConfigDirPath(configurationPath);
-            embeddedCassandra.init();
-
-            CassandraHostConfigurator configurator = new CassandraHostConfigurator(embeddedCassandraHostname + ":" + embeddedCassandraPort);
-            Cluster cluster = HFactory.getOrCreateCluster(embeddedCassandraClusterName, configurator);
-            keyspace = HFactory.createKeyspace(embeddedCassandraKeySpaceName, cluster);
-        }
-        catch (Exception e)
-        {
-            log.log(Level.ERROR,"Error received",e);
-            throw new RuntimeException(e.getMessage());
-        }
+        ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+        ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
+        ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
     }
 
     public void addReadings(final List<Reading> readings)
@@ -185,7 +154,7 @@ public class HectorHeterogeneousSuperClassExample {
         mutator.execute();
     }
 
-    public List<Reading> querySensorReadingsByTime(UUID sensorId, Interval interval, int maxToReturn)
+    public List<Reading> querySensorReadingsByInterval(UUID sensorId, Interval interval, int maxToReturn)
     {
         SuperSliceQuery query = HFactory.createSuperSliceQuery(keyspace, us, ls, ss, ByteBufferSerializer.get());
 

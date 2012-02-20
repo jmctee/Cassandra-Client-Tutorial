@@ -1,12 +1,13 @@
 package com.jeklsoft.hector;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang.Validate;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -15,7 +16,6 @@ import me.prettyprint.cassandra.serializers.LongSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.ByteBufferSerializer;
-import me.prettyprint.cassandra.serializers.DoubleSerializer;
 import me.prettyprint.cassandra.serializers.IntegerSerializer;
 import me.prettyprint.cassandra.serializers.BooleanSerializer;
 
@@ -31,6 +31,7 @@ import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SuperSliceQuery;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /*
 Cluster: SensorNet
@@ -38,8 +39,8 @@ Cluster: SensorNet
 Keyspace: "Climate" {
     CF<supercolumn>: "Sensors" {
         sensor_uuid: {
-            <timestamp> : {
-                "Temperature" : <Double>
+            <timestamp: DateTime> : {
+                "Temperature" : <BigDecimal>
                 "WindSpeed" : <Integer>
                 "WindDirection" : <String>
                 "Humidity" : <BigInteger>
@@ -48,8 +49,8 @@ Keyspace: "Climate" {
 
             ...
 
-            <timestamp> : {
-                "Temperature" : <Double>
+            <timestamp: DateTime> : {
+                "Temperature" : <BigDecimal>
                 "WindSpeed" : <Integer>
                 "WindDirection" : <String>
                 "Humidity" : <BigInteger>
@@ -60,8 +61,8 @@ Keyspace: "Climate" {
         ...
 
         sensor_uuid: {
-            <timestamp> : {
-                "Temperature" : <Double>
+            <timestamp: DateTime> : {
+                "Temperature" : <BigDecimal>
                 "WindSpeed" : <Integer>
                 "WindDirection" : <String>
                 "Humidity" : <BigInteger>
@@ -70,8 +71,8 @@ Keyspace: "Climate" {
 
             ...
 
-            <timestamp> : {
-                "Temperature" : <Double>
+            <timestamp: DateTime> : {
+                "Temperature" : <BigDecimal>
                 "WindSpeed" : <Integer>
                 "WindDirection" : <String>
                 "Humidity" : <BigInteger>
@@ -112,6 +113,7 @@ public class HectorHeterogeneousSuperClassExample {
         {
             ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
             ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
+            ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
 
             List<String> cassandraCommands = new ArrayList<String>();
             cassandraCommands.add("create keyspace " + embeddedCassandraKeySpaceName + ";");
@@ -135,14 +137,6 @@ public class HectorHeterogeneousSuperClassExample {
             log.log(Level.ERROR,"Error received",e);
             throw new RuntimeException(e.getMessage());
         }
-    }
-
-    public void addReading(final Reading reading)
-    {
-        List<Reading> readings = new ArrayList<Reading>();
-        readings.add(reading);
-
-        addReadings(readings);
     }
 
     public void addReadings(final List<Reading> readings)
@@ -179,7 +173,7 @@ public class HectorHeterogeneousSuperClassExample {
             columnList.add(humidityColumn);
             columnList.add(badAirQualityDetectedColumn);
 
-            HSuperColumn superColumn = HFactory.createSuperColumn(reading.getTimestamp().getTime(),
+            HSuperColumn superColumn = HFactory.createSuperColumn(reading.getTimestamp(),
                     columnList,
                     genericOutputSerializer,
                     genericOutputSerializer,
@@ -191,11 +185,12 @@ public class HectorHeterogeneousSuperClassExample {
         mutator.execute();
     }
 
-    public List<Reading> querySensorReadingsByTime(UUID sensorId, Date startingDate, Date endingDate, int maxToReturn)
+    public List<Reading> querySensorReadingsByTime(UUID sensorId, Interval interval, int maxToReturn)
     {
         SuperSliceQuery query = HFactory.createSuperSliceQuery(keyspace, us, ls, ss, ByteBufferSerializer.get());
 
-        query.setColumnFamily(columnFamilyName).setKey(sensorId).setRange(startingDate.getTime(), endingDate.getTime(), false, maxToReturn);
+        query.setColumnFamily(columnFamilyName).setKey(sensorId).setRange(interval.getStartMillis(), interval.getEndMillis(),
+                              false, maxToReturn);
 
         QueryResult<SuperSlice<UUID, String, ByteBuffer>> result = query.execute();
 
@@ -213,10 +208,10 @@ public class HectorHeterogeneousSuperClassExample {
 
     private Reading getReadingFromSuperColumn(UUID sensorId, HSuperColumn row)
     {
-        Date timestamp = new Date((Long)row.getName());
-        Double temperature = null;
+        DateTime timestamp = new DateTime(row.getName());
+        BigDecimal temperature = null;
         Integer windSpeed = null;
-        String direction = null;
+        String windDirection = null;
         BigInteger humidity = null;
         Boolean badAirQualityDetected = null;
 
@@ -225,7 +220,7 @@ public class HectorHeterogeneousSuperClassExample {
         {
             if (temperatureNameColumnName.equals(column.getName()))
             {
-                temperature = DoubleSerializer.get().fromByteBuffer(column.getValue());
+                temperature = BigDecimalSerializer.get().fromByteBuffer(column.getValue());
             }
             else if (windSpeedNameColumnName.equals(column.getName()))
             {
@@ -233,7 +228,7 @@ public class HectorHeterogeneousSuperClassExample {
             }
             else if (windDirectionNameColumnName.equals(column.getName()))
             {
-                direction = StringSerializer.get().fromByteBuffer(column.getValue());
+                windDirection = StringSerializer.get().fromByteBuffer(column.getValue());
             }
             else if (humidityNameColumnName.equals(column.getName()))
             {
@@ -249,15 +244,13 @@ public class HectorHeterogeneousSuperClassExample {
             }
         }
 
-        // TODO: use assertion here
-        if ((temperature == null) || (windSpeed == null) ||
-            (direction == null) || (humidity == null) ||
-            (badAirQualityDetected == null))
-        {
-            throw new RuntimeException("Missing Columns");
-        }
+        Validate.notNull(temperature, "Temperature not found in retrieved super column");
+        Validate.notNull(windSpeed, "Wind speed not found in retrieved super column");
+        Validate.notNull(windDirection, "Wind Direction not found in retrieved super column");
+        Validate.notNull(humidity, "Humidity not found in retrieved super column");
+        Validate.notNull(badAirQualityDetected, "Bad air quality detection not found in retrieved super column");
 
-        Reading reading = new Reading(sensorId, timestamp, temperature, windSpeed, direction, humidity, badAirQualityDetected);
+        Reading reading = new Reading(sensorId, timestamp, temperature, windSpeed, windDirection, humidity, badAirQualityDetected);
         return reading;
     }
 }

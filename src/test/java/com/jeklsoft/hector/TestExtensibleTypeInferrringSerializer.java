@@ -26,7 +26,7 @@ import me.prettyprint.cassandra.serializers.BytesArraySerializer;
 import me.prettyprint.hector.api.Serializer;
 
 public class TestExtensibleTypeInferrringSerializer {
-    //    UUID
+
     @Test
     public void uuidObjectShouldReturnUUIDSerializer()
     {
@@ -42,7 +42,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), UUIDSerializer.class);
     }
 
-    //    String
     @Test
     public void stringObjectShouldReturnStringSerializer()
     {
@@ -58,7 +57,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), StringSerializer.class);
     }
 
-    //    Long/long
     @Test
     public void longValueShouldReturnLongSerializer()
     {
@@ -82,7 +80,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), LongSerializer.class);
     }
 
-    //    Integer/int
     @Test
     public void intValueShouldReturnIntegerSerializer()
     {
@@ -106,7 +103,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), IntegerSerializer.class);
     }
 
-    //    Boolean/boolean
     @Test
     public void booleanValueShouldReturnBooleanSerializer()
     {
@@ -130,7 +126,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), BooleanSerializer.class);
     }
 
-    //    Double/double
     @Test
     public void doubleValueShouldReturnDoubleSerializer()
     {
@@ -154,7 +149,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), DoubleSerializer.class);
     }
 
-    //    Float/float
     @Test
     public void floatValueShouldReturnFloatSerializer()
     {
@@ -178,7 +172,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), FloatSerializer.class);
     }
 
-    //    Short/short
     @Test
     public void shortValueShouldReturnShortSerializer()
     {
@@ -202,7 +195,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), ShortSerializer.class);
     }
 
-    //    byte[]
     @Test
     public void byteArrayObjectShouldReturnBytesArraySerializer()
     {
@@ -218,7 +210,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), BytesArraySerializer.class);
     }
 
-    //    ByteBuffer
     @Test
     public void byteBufferObjectShouldReturnByteBufferSerializer()
     {
@@ -235,7 +226,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), ByteBufferSerializer.class);
     }
 
-    //    Date
     @Test
     public void dateObjectShouldReturnDateSerializer()
     {
@@ -251,7 +241,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), DateSerializer.class);
     }
 
-    //    BigInteger
     @Test
     public void bigIntegerObjectShouldReturnBigIntegerSerializer()
     {
@@ -269,7 +258,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), BigIntegerSerializer.class);
     }
 
-    //    Object
     @Test
     public void objectObjectShouldReturnObjectSerializer()
     {
@@ -285,7 +273,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), ObjectSerializer.class);
     }
 
-    //    Unsupported class
     @SuppressWarnings({"unchecked"})
     @Test
     public void unsupportedClassObjectShouldReturnObjectSerializer()
@@ -303,7 +290,6 @@ public class TestExtensibleTypeInferrringSerializer {
         assertEquals(serializer.getClass(), ObjectSerializer.class);
     }
 
-    //    null
     @Test
     public void nullObjectShouldReturnByteBufferSerializer()
     {

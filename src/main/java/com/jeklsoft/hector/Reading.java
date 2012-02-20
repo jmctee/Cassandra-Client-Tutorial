@@ -3,22 +3,23 @@ package com.jeklsoft.hector;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.UUID;
 
 public class Reading {
 
     private final UUID sensorId;
-    private final Date timestamp;
-    private final Double temperature;
+    private final DateTime timestamp;
+    private final BigDecimal temperature;
     private final Integer windSpeed;
     private final String direction;
     private final BigInteger humidity;
     private final Boolean badAirQualityDetected;
 
-    public Reading(UUID sensorId, Date timestamp, Double temperature, Integer windSpeed, String direction,
+    public Reading(UUID sensorId, DateTime timestamp, BigDecimal temperature, Integer windSpeed, String direction,
                    BigInteger humidity, Boolean badAirQualityDetected) {
         this.sensorId = sensorId;
         this.timestamp = timestamp;
@@ -33,11 +34,11 @@ public class Reading {
         return sensorId;
     }
 
-    public Date getTimestamp() {
+    public DateTime getTimestamp() {
         return timestamp;
     }
 
-    public Double getTemperature() {
+    public BigDecimal getTemperature() {
         return temperature;
     }
 

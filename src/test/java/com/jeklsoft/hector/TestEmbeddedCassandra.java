@@ -1,8 +1,12 @@
 package com.jeklsoft.hector;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestEmbeddedCassandra {
@@ -12,6 +16,17 @@ public class TestEmbeddedCassandra {
     private static final String embeddedCassandraKeySpaceName = "TestKeyspaceName";
     private static final String columnFamilyName = "TestColumnName";
     private static final String configurationPath = "/tmp/cassandra";
+
+    @BeforeClass
+    public static void configureCassandra() throws Exception {
+
+        FileUtils.deleteDirectory(new File(configurationPath));
+
+        URL cassandraYamlUrl = TestEmbeddedCassandra.class.getClassLoader().getResource("cassandra.yaml");
+        File cassandraYamlFile = new File(cassandraYamlUrl.toURI());
+
+        FileUtils.copyFileToDirectory(cassandraYamlFile, new File(configurationPath));
+    }
 
     @Test
     public void sunnyDayTest() throws Exception {

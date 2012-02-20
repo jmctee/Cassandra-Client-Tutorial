@@ -3,23 +3,39 @@ package com.jeklsoft.hector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-// TODO: Need mechanism to auto copy cassandra.yaml to /tmp/cassandra
 
 public class TestHectorHeterogeneousSuperClassExample {
 
+    private static final String configurationPath = "/tmp/cassandra";
+
+    @BeforeClass
+    public static void configureCassandra() throws Exception {
+
+        FileUtils.deleteDirectory(new File(configurationPath));
+
+        URL stream = TestHectorHeterogeneousSuperClassExample.class.getClassLoader().getResource("cassandra.yaml");
+        File cassandraYaml = new File(stream.toURI());
+
+        FileUtils.copyFileToDirectory(cassandraYaml, new File(configurationPath));
+    }
+
     @Test
     public void testHectorAccess() throws Exception {
+
         HectorHeterogeneousSuperClassExample example = new HectorHeterogeneousSuperClassExample();
 
         UUID sensorId1 = new UUID(0,100);

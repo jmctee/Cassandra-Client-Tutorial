@@ -81,7 +81,11 @@ public class EmbeddedCassandra {
 
         for (String command : cassandraStartupCommands)
         {
-          CliMain.processStatement(command);
+            try {
+                CliMain.processStatement(command);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         CliMain.disconnect();

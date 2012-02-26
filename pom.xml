@@ -39,8 +39,8 @@
 							<value>${project.build.directory}</value>
 						</property>
 					</systemProperties>
+                    <!-- Important for the embedded cassandra instance! -->
 					<forkMode>pertest</forkMode>
-					<!-- Important for the embedded cassandra instance -->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -55,21 +55,6 @@
 			<groupId>org.apache.cassandra</groupId>
 			<artifactId>cassandra-all</artifactId>
 			<version>1.0.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.thrift</groupId>
-			<artifactId>libthrift</artifactId>
-			<version>0.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.5.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.6</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

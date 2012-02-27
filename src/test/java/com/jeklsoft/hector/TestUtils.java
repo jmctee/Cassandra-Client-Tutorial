@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestUtils {
@@ -45,7 +44,7 @@ public class TestUtils {
 
         FileUtils.deleteDirectory(new File(configurationPath));
 
-        URL stream = TestHectorHeterogeneousSuperColumnExample.class.getClassLoader().getResource("cassandra.yaml");
+        URL stream = TestUtils.class.getClassLoader().getResource("cassandra.yaml");
         File cassandraYaml = new File(stream.toURI());
 
         FileUtils.copyFileToDirectory(cassandraYaml, new File(configurationPath));

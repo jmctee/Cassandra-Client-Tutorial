@@ -80,9 +80,9 @@ Keyspace: "Climate" {
 }
 */
 
-public class HectorHeterogeneousSuperClassExample {
+public class HectorHeterogeneousSuperColumnExample {
 
-    private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperClassExample.class);
+    private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
 
     private static final Serializer genericOutputSerializer = ExtendedTypeInferringSerializer.get();
     private static final Serializer ss = StringSerializer.get();
@@ -98,7 +98,7 @@ public class HectorHeterogeneousSuperClassExample {
     private final Keyspace keyspace;
     private final String columnFamilyName;
 
-    public HectorHeterogeneousSuperClassExample(Keyspace keyspace, String columnFamilyName)
+    public HectorHeterogeneousSuperColumnExample(Keyspace keyspace, String columnFamilyName)
     {
         this.keyspace = keyspace;
         this.columnFamilyName = columnFamilyName;

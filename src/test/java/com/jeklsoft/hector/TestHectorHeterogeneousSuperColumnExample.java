@@ -24,9 +24,9 @@ import org.joda.time.Interval;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestHectorHeterogeneousSuperClassExample {
+public class TestHectorHeterogeneousSuperColumnExample {
 
-    private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperClassExample.class);
+    private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
 
     private static final String configurationPath = "/tmp/cassandra";
     private static final String cassandraHostname = "localhost";
@@ -42,11 +42,13 @@ public class TestHectorHeterogeneousSuperClassExample {
 
         try
         {
-            initializeEmbeddedCassandra();
+            List<String> cassandraCommands = new ArrayList<String>();
+            cassandraCommands.add("create keyspace " + cassandraKeySpaceName + ";");
+            cassandraCommands.add("use " + cassandraKeySpaceName + ";");
+            cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
 
-            CassandraHostConfigurator configurator = new CassandraHostConfigurator(cassandraHostname + ":" + cassandraPort);
-            Cluster cluster = HFactory.getOrCreateCluster(cassandraClusterName, configurator);
-            keyspace = HFactory.createKeyspace(cassandraKeySpaceName, cluster);
+            keyspace = TestUtils.configureCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
+                                                    cassandraKeySpaceName, configurationPath, cassandraCommands);
         }
         catch (Exception e)
         {
@@ -55,33 +57,10 @@ public class TestHectorHeterogeneousSuperClassExample {
         }
     }
 
-    private static void initializeEmbeddedCassandra() throws Exception {
-
-        FileUtils.deleteDirectory(new File(configurationPath));
-
-        URL stream = TestHectorHeterogeneousSuperClassExample.class.getClassLoader().getResource("cassandra.yaml");
-        File cassandraYaml = new File(stream.toURI());
-
-        FileUtils.copyFileToDirectory(cassandraYaml, new File(configurationPath));
-
-        List<String> cassandraCommands = new ArrayList<String>();
-        cassandraCommands.add("create keyspace " + cassandraKeySpaceName + ";");
-        cassandraCommands.add("use " + cassandraKeySpaceName + ";");
-        cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
-
-        EmbeddedCassandra embeddedCassandra = new EmbeddedCassandra();
-        embeddedCassandra.setCleanCassandra(true);
-        embeddedCassandra.setCassandraStartupCommands(cassandraCommands);
-        embeddedCassandra.setHostname(cassandraHostname);
-        embeddedCassandra.setHostport(cassandraPort);
-        embeddedCassandra.setCassandraConfigDirPath(configurationPath);
-        embeddedCassandra.init();
-    }
-
     @Test
     public void testHectorAccess() throws Exception {
 
-        HectorHeterogeneousSuperClassExample example = new HectorHeterogeneousSuperClassExample(keyspace, columnFamilyName);
+        HectorHeterogeneousSuperColumnExample example = new HectorHeterogeneousSuperColumnExample(keyspace, columnFamilyName);
 
         UUID sensorId1 = new UUID(0,100);
         UUID sensorId2 = new UUID(0,200);

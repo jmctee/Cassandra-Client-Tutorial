@@ -3,6 +3,7 @@ package com.jeklsoft.hector;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;

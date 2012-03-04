@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static me.prettyprint.hector.api.ddl.ComparatorType.BYTESTYPE;
@@ -37,7 +38,9 @@ public class ReadingSerializer extends AbstractSerializer<Reading> {
     @Override
     public Reading fromByteBuffer(ByteBuffer byteBuffer) {
         try {
-            byte[] byteArray = byteBuffer.array();
+            int startingIndex = byteBuffer.position();
+            int endingIndex = byteBuffer.limit();
+            byte[] byteArray = Arrays.copyOfRange(byteBuffer.array(), startingIndex, endingIndex);
             ReadingBuffer.Reading bufferedReading = ReadingBuffer.Reading.newBuilder().mergeFrom(byteArray).build();
             return getReading(bufferedReading);
         } catch (InvalidProtocolBufferException e) {

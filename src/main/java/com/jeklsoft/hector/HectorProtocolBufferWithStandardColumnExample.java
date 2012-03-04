@@ -10,14 +10,12 @@ import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SliceQuery;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,19 +27,13 @@ Keyspace: "Climate" {
     CF: "Sensors" {
         sensor_uuid: {
             <timestamp: DateTime> : reading<ReadingBuffer>
-
             ...
-
             <timestamp: DateTime> : reading<ReadingBuffer>
         }
-
         ...
-
         sensor_uuid: {
             <timestamp: DateTime> : reading<ReadingBuffer>
-
             ...
-
             <timestamp: DateTime> : reading<ReadingBuffer>
         }
     }
@@ -97,45 +89,13 @@ public class HectorProtocolBufferWithStandardColumnExample implements ReadingsPe
 
         List<HColumn<DateTime, Reading>> columns = result.get().getColumns();
 
-        List<ByteBuffer> buffers = getArrays(columns.get(0).getValueBytes(), columns.size());
         List<Reading> readings = new ArrayList<Reading>();
 
-        for (ByteBuffer buffer : buffers) {
-            Reading reading = ReadingSerializer.get().fromByteBuffer(buffer);
+        for (HColumn column : columns) {
+            Reading reading = (Reading) column.getValue();
             readings.add(reading);
         }
-//        for (HColumn column : columns)
-//        {
-//            Reading reading = (Reading)column.getValue();
-//            readings.add(reading);
-//        }
 
         return readings;
     }
-
-    private List<ByteBuffer> getArrays(ByteBuffer buffer, int expectedCount) {
-        List<ByteBuffer> buffers = new ArrayList<ByteBuffer>();
-
-        byte[] bytes = buffer.array();
-        for (int ii = 0; ii < expectedCount; ii++) {
-
-            int start = 54 + (79 * ii);
-            int end = start + 41;
-
-            byte[] array = ArrayUtils.subarray(bytes, start, end);
-            buffers.add(ByteBuffer.wrap(array));
-        }
-
-        return buffers;
-    }
-
-//    private void dumpArray(String prefix, byte[] array) {
-//
-//        System.out.print(prefix);
-//        String line = "";
-//        for (byte value : array) {
-//            line += String.format("%02x", value);
-//        }
-//        System.out.println(line);
-//    }
 }

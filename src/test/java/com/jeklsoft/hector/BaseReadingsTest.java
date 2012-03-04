@@ -75,25 +75,24 @@ public class BaseReadingsTest {
             assertTrue(returnedReadings.contains(expectedReading));
         }
 
-//        expectedReadings = new ArrayList<Reading>();
-//        for (int ii=0; ii<4; ii++) {
-//            BigDecimal temperature = new BigDecimal(195 - ii).movePointLeft(1);
-//            expectedReadings.add(new Reading(sensorId2, baseDate.plusMinutes(readingInterval * ii),
-//                                             temperature, 24, "ESE", BigInteger.valueOf(17L), false));
-//        }
-//
-//        startTime = new DateTime(baseDate);
-//        endTime = new DateTime(baseDate.plusMinutes(readingInterval * 3));
-//        duration = new Duration(startTime, endTime);
-//        interval = new Interval(startTime, duration);
-//
-//        returnedReadings = example.querySensorReadingsByInterval(sensorId2, interval, 10);
-//
-//        assertEquals(expectedReadings.size(), returnedReadings.size());
-//
-//        for (Reading expectedReading : expectedReadings)
-//        {
-//            assertTrue(returnedReadings.contains(expectedReading));
-//        }
+        expectedReadings = new ArrayList<Reading>();
+        for (int ii = 0; ii < 4; ii++) {
+            BigDecimal temperature = new BigDecimal(195 - ii).movePointLeft(1);
+            expectedReadings.add(new Reading(sensorId2, baseDate.plusMinutes(readingInterval * ii),
+                    temperature, 24, "ESE", BigInteger.valueOf(17L), false));
+        }
+
+        startTime = new DateTime(baseDate);
+        endTime = new DateTime(baseDate.plusMinutes(readingInterval * 3));
+        duration = new Duration(startTime, endTime);
+        interval = new Interval(startTime, duration);
+
+        returnedReadings = persistor.querySensorReadingsByInterval(sensorId2, interval, 10);
+
+        assertEquals(expectedReadings.size(), returnedReadings.size());
+
+        for (Reading expectedReading : expectedReadings) {
+            assertTrue(returnedReadings.contains(expectedReading));
+        }
     }
 }

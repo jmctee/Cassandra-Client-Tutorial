@@ -1,6 +1,6 @@
-package com.jeklsoft.hector;
+package com.jeklsoft.cassandraclient;
 
-option java_package = "com.jeklsoft.hector";
+option java_package = "com.jeklsoft.cassandraclient";
 option java_outer_classname = "ReadingBuffer";
 
 message Reading {

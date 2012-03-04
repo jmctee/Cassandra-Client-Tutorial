@@ -2,7 +2,6 @@ package com.jeklsoft.hector;
 
 import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.hector.api.Cluster;
-import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.factory.HFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -16,25 +15,21 @@ import java.util.List;
 public class TestUtils {
     private static final Logger log = Logger.getLogger(TestUtils.class);
 
-    public static Keyspace configureCassandra(String cassandraHostname, Integer cassandraPort,
-                                              String cassandraClusterName, String cassandraKeySpaceName,
-                                              String configurationPath, List<String> cassandraCommands) throws Exception {
+    public static me.prettyprint.hector.api.Keyspace configureHectorAccessToCassandra(String cassandraHostname, Integer cassandraPort,
+                                                                                      String cassandraClusterName, String cassandraKeySpaceName,
+                                                                                      String configurationPath, List<String> cassandraCommands) throws Exception {
 
-        try
-        {
-            if (StringUtils.isNotEmpty(configurationPath) && (cassandraCommands != null) && (!cassandraCommands.isEmpty()))
-            {
+        try {
+            if (StringUtils.isNotEmpty(configurationPath) && (cassandraCommands != null) && (!cassandraCommands.isEmpty())) {
                 initializeEmbeddedCassandra(configurationPath, cassandraCommands, cassandraHostname, cassandraPort);
             }
 
             CassandraHostConfigurator configurator = new CassandraHostConfigurator(cassandraHostname + ":" + cassandraPort);
             Cluster cluster = HFactory.getOrCreateCluster(cassandraClusterName, configurator);
-            Keyspace keyspace = HFactory.createKeyspace(cassandraKeySpaceName, cluster);
+            me.prettyprint.hector.api.Keyspace keyspace = HFactory.createKeyspace(cassandraKeySpaceName, cluster);
             return keyspace;
-        }
-        catch (Exception e)
-        {
-            log.log(Level.ERROR,"Error received",e);
+        } catch (Exception e) {
+            log.log(Level.ERROR, "Error received", e);
             throw new RuntimeException(e.getMessage());
         }
     }

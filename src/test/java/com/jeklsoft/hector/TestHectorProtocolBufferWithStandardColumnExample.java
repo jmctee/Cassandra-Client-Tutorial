@@ -1,5 +1,6 @@
 package com.jeklsoft.hector;
 
+import me.prettyprint.hector.api.Keyspace;
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,6 +12,7 @@ public class TestHectorProtocolBufferWithStandardColumnExample extends BaseReadi
     private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
 
     private static final Boolean useEmbeddedCassandra = true;
+    protected static Keyspace keyspace;
 
     @BeforeClass
     public static void configureCassandra() throws Exception {
@@ -23,7 +25,8 @@ public class TestHectorProtocolBufferWithStandardColumnExample extends BaseReadi
             cassandraCommands.add("create column family " + columnFamilyName + ";");
         }
 
-        initializeCassandra(cassandraCommands);
+        keyspace = TestUtils.configureHectorAccessToCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
+                cassandraKeySpaceName, configurationPath, cassandraCommands);
     }
 
     @Test

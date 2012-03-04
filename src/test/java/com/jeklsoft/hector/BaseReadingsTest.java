@@ -1,6 +1,5 @@
 package com.jeklsoft.hector;
 
-import me.prettyprint.hector.api.Keyspace;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -23,14 +22,7 @@ public class BaseReadingsTest {
     protected static final Integer cassandraPort = 9160;
     protected static final String cassandraKeySpaceName = "Climate";
     protected static final String cassandraClusterName = "SensorNet";
-
     protected static final String columnFamilyName = "BoulderSensors";
-    protected static Keyspace keyspace;
-
-    protected static void initializeCassandra(List<String> cassandraCommands) throws Exception {
-        keyspace = TestUtils.configureCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
-                cassandraKeySpaceName, configurationPath, cassandraCommands);
-    }
 
     protected void runAccessorTest(ReadingsPersistor persistor) {
 

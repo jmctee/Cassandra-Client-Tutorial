@@ -34,8 +34,8 @@ public class TestUtils {
         }
     }
 
-    private static void initializeEmbeddedCassandra(String configurationPath, List<String> cassandraCommands,
-                                                    String cassandraHostname, Integer cassandraPort) throws Exception {
+    public static void initializeEmbeddedCassandra(String configurationPath, List<String> cassandraCommands,
+                                                   String cassandraHostname, Integer cassandraPort) throws Exception {
 
         FileUtils.deleteDirectory(new File(configurationPath));
 

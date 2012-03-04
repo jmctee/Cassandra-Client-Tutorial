@@ -1,5 +1,7 @@
 package com.jeklsoft.hector;
 
+import com.jeklsoft.hector.serializer.hector.ExtensibleTypeInferrringSerializer;
+import com.jeklsoft.hector.serializer.hector.ReadingSerializer;
 import me.prettyprint.hector.api.Serializer;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -13,8 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestReadingSerializer {
     @Test
-    public void ReadingObjectShouldReturnReadingSerializer()
-    {
+    public void ReadingObjectShouldReturnReadingSerializer() {
         ExtensibleTypeInferrringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
         Reading reading = new Reading(UUID.randomUUID(), new DateTime(), new BigDecimal(195).movePointLeft(1),
                 24, "ESE", BigInteger.valueOf(17L), false);
@@ -23,16 +24,14 @@ public class TestReadingSerializer {
     }
 
     @Test
-    public void ReadingClassShouldReturnReadingSerializer()
-    {
+    public void ReadingClassShouldReturnReadingSerializer() {
         ExtensibleTypeInferrringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
         Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Reading.class);
         assertEquals(serializer.getClass(), ReadingSerializer.class);
     }
 
     @Test
-    public void SerializingThenDeserializingReadingResultsInSameReading()
-    {
+    public void SerializingThenDeserializingReadingResultsInSameReading() {
         ExtensibleTypeInferrringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
         Reading reading = new Reading(UUID.randomUUID(), new DateTime(), new BigDecimal(195).movePointLeft(1),
                 24, "ESE", BigInteger.valueOf(17L), false);

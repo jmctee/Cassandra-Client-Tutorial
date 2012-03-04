@@ -1,5 +1,7 @@
 package com.jeklsoft.hector;
 
+import com.jeklsoft.hector.serializer.hector.BigDecimalSerializer;
+import com.jeklsoft.hector.serializer.hector.ExtensibleTypeInferrringSerializer;
 import me.prettyprint.hector.api.Serializer;
 import org.junit.Test;
 
@@ -10,8 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestBigDecimalSerializer {
     @Test
-    public void BigDecimalObjectShouldReturnBigDecimalSerializer()
-    {
+    public void BigDecimalObjectShouldReturnBigDecimalSerializer() {
         ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
         BigDecimal value = new BigDecimal(1);
         Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
@@ -19,16 +20,14 @@ public class TestBigDecimalSerializer {
     }
 
     @Test
-    public void BigDecimalClassShouldReturnBigDecimalSerializer()
-    {
+    public void BigDecimalClassShouldReturnBigDecimalSerializer() {
         ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
         Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(BigDecimal.class);
         assertEquals(serializer.getClass(), BigDecimalSerializer.class);
     }
 
     @Test
-    public void SerializingThenDeserializingBigDecimalResultsInSameBigDecimal()
-    {
+    public void SerializingThenDeserializingBigDecimalResultsInSameBigDecimal() {
         ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
         BigDecimal value = new BigDecimal(1);
 

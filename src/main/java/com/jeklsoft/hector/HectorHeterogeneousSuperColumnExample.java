@@ -1,5 +1,9 @@
 package com.jeklsoft.hector;
 
+import com.jeklsoft.hector.serializer.hector.BigDecimalSerializer;
+import com.jeklsoft.hector.serializer.hector.DateTimeSerializer;
+import com.jeklsoft.hector.serializer.hector.ExtendedTypeInferringSerializer;
+import com.jeklsoft.hector.serializer.hector.ExtensibleTypeInferrringSerializer;
 import me.prettyprint.cassandra.serializers.*;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.Serializer;

@@ -1,12 +1,12 @@
-package com.jeklsoft.hector;
+package com.jeklsoft.hector.serializer.hector;
 
 import me.prettyprint.hector.api.Serializer;
 
 public interface ISerializerTypeInferer {
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public <T> Serializer<T> getSerializer(Object value);
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public <T> Serializer<T> getSerializer(Class<?> valueClass);
 }

@@ -1,5 +1,6 @@
 package com.jeklsoft.hector;
 
+import com.jeklsoft.hector.serializer.hector.*;
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Keyspace;

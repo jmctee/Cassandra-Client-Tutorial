@@ -1,6 +1,7 @@
 package com.jeklsoft.hector;
 
 import com.google.protobuf.ByteString;
+import com.jeklsoft.hector.serializer.hector.BigDecimalSerializer;
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Serializer;
@@ -41,9 +42,9 @@ public class TestReadingBuffer {
 
     @Test
     public void canCreateReadingBuffer() {
-        assertEquals(uuid, getObject(UUIDSerializer.get(),reading.getSensorId()));
+        assertEquals(uuid, getObject(UUIDSerializer.get(), reading.getSensorId()));
         assertEquals(timestamp, new DateTime(reading.getTimestamp()));
-        assertEquals(temperature, getObject(BigDecimalSerializer.get(),reading.getTemperature()));
+        assertEquals(temperature, getObject(BigDecimalSerializer.get(), reading.getTemperature()));
         assertEquals(windSpeed, reading.getWindSpeed());
         assertEquals(windDirection, reading.getWindDirection());
         assertEquals(humidity, getObject(BigIntegerSerializer.get(), reading.getHumidity()));

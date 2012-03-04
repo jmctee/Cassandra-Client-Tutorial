@@ -1,13 +1,13 @@
-package com.jeklsoft.hector;
+package com.jeklsoft.hector.serializer;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
-import me.prettyprint.cassandra.serializers.AbstractSerializer;
+import com.jeklsoft.hector.Reading;
+import com.jeklsoft.hector.ReadingBuffer;
+import com.jeklsoft.hector.serializer.hector.BigDecimalSerializer;
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Serializer;
-import me.prettyprint.hector.api.ddl.ComparatorType;
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
@@ -16,27 +16,16 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static me.prettyprint.hector.api.ddl.ComparatorType.BYTESTYPE;
+public class ReadingSerializerUtils {
 
-public class ReadingSerializer extends AbstractSerializer<Reading> {
-    private static final Logger log = Logger.getLogger(ReadingSerializer.class);
-
-    private static final ReadingSerializer instance = new ReadingSerializer();
-
-    public static ReadingSerializer get() {
-        return instance;
-    }
-
-    @Override
-    public ByteBuffer toByteBuffer(Reading reading) {
+    public static ByteBuffer toByteBuffer(Reading reading) {
         ReadingBuffer.Reading bufferedReading = getBufferedReading(reading);
         byte[] array = bufferedReading.toByteString().toByteArray();
         ByteBuffer buffer = ByteBuffer.wrap(array);
         return buffer;
     }
 
-    @Override
-    public Reading fromByteBuffer(ByteBuffer byteBuffer) {
+    public static Reading fromByteBuffer(ByteBuffer byteBuffer) {
         try {
             int startingIndex = byteBuffer.position();
             int endingIndex = byteBuffer.limit();
@@ -48,12 +37,7 @@ public class ReadingSerializer extends AbstractSerializer<Reading> {
         }
     }
 
-    @Override
-    public ComparatorType getComparatorType() {
-        return BYTESTYPE;
-    }
-
-    private ReadingBuffer.Reading getBufferedReading(Reading reading) {
+    private static ReadingBuffer.Reading getBufferedReading(Reading reading) {
         return ReadingBuffer.Reading.newBuilder()
                 .setSensorId(getByteString(UUIDSerializer.get(), reading.getSensorId()))
                 .setTimestamp(reading.getTimestamp().getMillis())
@@ -65,7 +49,7 @@ public class ReadingSerializer extends AbstractSerializer<Reading> {
                 .build();
     }
 
-    private Reading getReading(ReadingBuffer.Reading bufferedReading) {
+    private static Reading getReading(ReadingBuffer.Reading bufferedReading) {
         return new Reading((UUID) getObject(UUIDSerializer.get(), bufferedReading.getSensorId()),
                 new DateTime(bufferedReading.getTimestamp()),
                 (BigDecimal) getObject(BigDecimalSerializer.get(), bufferedReading.getTemperature()),
@@ -75,12 +59,12 @@ public class ReadingSerializer extends AbstractSerializer<Reading> {
                 bufferedReading.getBadAirQualityDetected());
     }
 
-    private ByteString getByteString(Serializer serializer, Object object) {
+    private static ByteString getByteString(Serializer serializer, Object object) {
         byte[] bytes = serializer.toByteBuffer(object).array();
         return ByteString.copyFrom(bytes);
     }
 
-    private Object getObject(Serializer serializer, ByteString bytes) {
+    private static Object getObject(Serializer serializer, ByteString bytes) {
         return serializer.fromBytes(bytes.toByteArray());
     }
 }

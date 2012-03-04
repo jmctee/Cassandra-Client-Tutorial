@@ -1,5 +1,7 @@
 package com.jeklsoft.hector;
 
+import com.netflix.astyanax.Keyspace;
+import com.netflix.astyanax.model.ColumnFamily;
 import org.apache.log4j.Logger;
 import org.joda.time.Interval;
 
@@ -29,13 +31,28 @@ Keyspace: "Climate" {
 public class AstyanaxProtocolBufferWithStandardColumnExample implements ReadingsPersistor {
     private static final Logger log = Logger.getLogger(HectorProtocolBufferWithStandardColumnExample.class);
 
-    public AstyanaxProtocolBufferWithStandardColumnExample() {
+    private final Keyspace keyspace;
+    private final ColumnFamily<UUID, Long> columnFamilyInfo;
 
+    public AstyanaxProtocolBufferWithStandardColumnExample(Keyspace keyspace, ColumnFamily<UUID, Long> columnFamilyInfo) {
+        this.keyspace = keyspace;
+        this.columnFamilyInfo = columnFamilyInfo;
     }
 
     @Override
     public void addReadings(List<Reading> readings) {
-        //To change body of implemented methods use File | Settings | File Templates.
+//        MutationBatch m = keyspace.prepareMutationBatch();
+//
+//        for (Reading reading : readings) {
+//            m.withRow(columnFamilyInfo, reading.getSensorId()).putColumn(reading.getTimestamp().getMillis(), reading, ReadingSerializer.get(), 1);
+//        }
+//
+//        try {
+//            OperationResult<Void> result = m.execute();
+//        }
+//        catch (ConnectionException e) {
+//            throw new RuntimeException("Storage of readings failed", e);
+//        }
     }
 
     @Override

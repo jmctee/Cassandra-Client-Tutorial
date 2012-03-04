@@ -1,23 +1,6 @@
 package com.jeklsoft.hector;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
-
-import me.prettyprint.cassandra.serializers.StringSerializer;
-import me.prettyprint.cassandra.serializers.LongSerializer;
-import me.prettyprint.cassandra.serializers.UUIDSerializer;
-import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
-import me.prettyprint.cassandra.serializers.ByteBufferSerializer;
-import me.prettyprint.cassandra.serializers.IntegerSerializer;
-import me.prettyprint.cassandra.serializers.BooleanSerializer;
-
+import me.prettyprint.cassandra.serializers.*;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.Serializer;
 import me.prettyprint.hector.api.beans.HColumn;
@@ -27,8 +10,17 @@ import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SuperSliceQuery;
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /*
 Cluster: SensorNet
@@ -80,7 +72,7 @@ Keyspace: "Climate" {
 }
 */
 
-public class HectorHeterogeneousSuperColumnExample {
+public class HectorHeterogeneousSuperColumnExample implements ReadingsPersistor {
 
     private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
 
@@ -94,12 +86,11 @@ public class HectorHeterogeneousSuperColumnExample {
     private static final String windDirectionNameColumnName = "WindDirection";
     private static final String humidityNameColumnName = "Humidity";
     private static final String badAirQualityDetectedNameColumnName = "BadAirQualityDetected";
-    
+
     private final Keyspace keyspace;
     private final String columnFamilyName;
 
-    public HectorHeterogeneousSuperColumnExample(Keyspace keyspace, String columnFamilyName)
-    {
+    public HectorHeterogeneousSuperColumnExample(Keyspace keyspace, String columnFamilyName) {
         this.keyspace = keyspace;
         this.columnFamilyName = columnFamilyName;
 
@@ -108,12 +99,11 @@ public class HectorHeterogeneousSuperColumnExample {
         ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
     }
 
-    public void addReadings(final List<Reading> readings)
-    {
+    @Override
+    public void addReadings(final List<Reading> readings) {
         Mutator mutator = HFactory.createMutator(keyspace, genericOutputSerializer);
 
-        for (Reading reading : readings)
-        {
+        for (Reading reading : readings) {
             HColumn temperatureColumn = HFactory.createColumn(temperatureNameColumnName,
                     reading.getTemperature(),
                     genericOutputSerializer,
@@ -154,12 +144,12 @@ public class HectorHeterogeneousSuperColumnExample {
         mutator.execute();
     }
 
-    public List<Reading> querySensorReadingsByInterval(UUID sensorId, Interval interval, int maxToReturn)
-    {
+    @Override
+    public List<Reading> querySensorReadingsByInterval(UUID sensorId, Interval interval, int maxToReturn) {
         SuperSliceQuery query = HFactory.createSuperSliceQuery(keyspace, us, ls, ss, ByteBufferSerializer.get());
 
         query.setColumnFamily(columnFamilyName).setKey(sensorId).setRange(interval.getStartMillis(), interval.getEndMillis(),
-                              false, maxToReturn);
+                false, maxToReturn);
 
         QueryResult<SuperSlice<UUID, String, ByteBuffer>> result = query.execute();
 
@@ -167,16 +157,14 @@ public class HectorHeterogeneousSuperColumnExample {
 
         List<Reading> readings = new ArrayList<Reading>();
 
-        for (HSuperColumn row : rows)
-        {
+        for (HSuperColumn row : rows) {
             Reading reading = getReadingFromSuperColumn(sensorId, row);
             readings.add(reading);
         }
         return readings;
     }
 
-    private Reading getReadingFromSuperColumn(UUID sensorId, HSuperColumn row)
-    {
+    private Reading getReadingFromSuperColumn(UUID sensorId, HSuperColumn row) {
         DateTime timestamp = new DateTime(row.getName());
         BigDecimal temperature = null;
         Integer windSpeed = null;
@@ -185,30 +173,18 @@ public class HectorHeterogeneousSuperColumnExample {
         Boolean badAirQualityDetected = null;
 
         List<HColumn<String, ByteBuffer>> columns = row.getColumns();
-        for(HColumn<String, ByteBuffer> column : columns)
-        {
-            if (temperatureNameColumnName.equals(column.getName()))
-            {
+        for (HColumn<String, ByteBuffer> column : columns) {
+            if (temperatureNameColumnName.equals(column.getName())) {
                 temperature = BigDecimalSerializer.get().fromByteBuffer(column.getValue());
-            }
-            else if (windSpeedNameColumnName.equals(column.getName()))
-            {
+            } else if (windSpeedNameColumnName.equals(column.getName())) {
                 windSpeed = IntegerSerializer.get().fromByteBuffer(column.getValue());
-            }
-            else if (windDirectionNameColumnName.equals(column.getName()))
-            {
+            } else if (windDirectionNameColumnName.equals(column.getName())) {
                 windDirection = StringSerializer.get().fromByteBuffer(column.getValue());
-            }
-            else if (humidityNameColumnName.equals(column.getName()))
-            {
+            } else if (humidityNameColumnName.equals(column.getName())) {
                 humidity = BigIntegerSerializer.get().fromByteBuffer(column.getValue());
-            }
-            else if (badAirQualityDetectedNameColumnName.equals(column.getName()))
-            {
+            } else if (badAirQualityDetectedNameColumnName.equals(column.getName())) {
                 badAirQualityDetected = BooleanSerializer.get().fromByteBuffer(column.getValue());
-            }
-            else
-            {
+            } else {
                 throw new RuntimeException("Unknown column name " + column.getName());
             }
         }

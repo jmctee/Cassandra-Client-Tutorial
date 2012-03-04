@@ -7,8 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestHectorHeterogeneousSuperColumnExample extends BaseReadingsTest {
-
+public class TestHectorProtocolBufferWithStandardColumnExample extends BaseReadingsTest {
     private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
 
     private static final Boolean useEmbeddedCassandra = true;
@@ -21,7 +20,7 @@ public class TestHectorHeterogeneousSuperColumnExample extends BaseReadingsTest 
             cassandraCommands = new ArrayList<String>();
             cassandraCommands.add("create keyspace " + cassandraKeySpaceName + ";");
             cassandraCommands.add("use " + cassandraKeySpaceName + ";");
-            cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
+            cassandraCommands.add("create column family " + columnFamilyName + ";");
         }
 
         initializeCassandra(cassandraCommands);
@@ -29,8 +28,7 @@ public class TestHectorHeterogeneousSuperColumnExample extends BaseReadingsTest 
 
     @Test
     public void testHectorAccess() throws Exception {
-
-        HectorHeterogeneousSuperColumnExample example = new HectorHeterogeneousSuperColumnExample(keyspace, columnFamilyName);
+        HectorProtocolBufferWithStandardColumnExample example = new HectorProtocolBufferWithStandardColumnExample(keyspace, columnFamilyName);
 
         runAccessorTest(example);
     }

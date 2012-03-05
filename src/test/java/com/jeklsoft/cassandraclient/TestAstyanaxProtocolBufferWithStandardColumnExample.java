@@ -77,6 +77,6 @@ public class TestAstyanaxProtocolBufferWithStandardColumnExample extends BaseRea
         AstyanaxProtocolBufferWithStandardColumnExample example =
                 new AstyanaxProtocolBufferWithStandardColumnExample(keyspace, CF_USER_INFO);
 
-        //runAccessorTest(example);
+        runAccessorTest(example);
     }
 }

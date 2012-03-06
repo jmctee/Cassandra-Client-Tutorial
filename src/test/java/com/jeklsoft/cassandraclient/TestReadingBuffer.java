@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient.hector;
+package com.jeklsoft.cassandraclient;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.google.protobuf.ByteString;
-import com.jeklsoft.cassandraclient.ReadingBuffer;
 import com.jeklsoft.cassandraclient.ReadingBuffer.Reading;
 import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
 

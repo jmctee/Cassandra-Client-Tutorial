@@ -15,7 +15,7 @@ public class TestEmbeddedCassandra {
     private static final Integer embeddedCassandraPort = 9160;
     private static final String embeddedCassandraKeySpaceName = "TestKeyspaceName";
     private static final String columnFamilyName = "TestColumnName";
-    private static final String configurationPath = "/tmp/cassandra";
+    private static final String configurationPath = "target/cassandra";
 
     @BeforeClass
     public static void configureCassandra() throws Exception {

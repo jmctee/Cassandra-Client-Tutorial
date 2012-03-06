@@ -17,7 +17,7 @@ import org.joda.time.Interval;
 public class BaseReadingsTest {
     private static final Logger log = Logger.getLogger(BaseReadingsTest.class);
 
-    protected static final String configurationPath = "/tmp/cassandra";
+    protected static final String configurationPath = "target/cassandra";
     protected static final String cassandraHostname = "localhost";
     protected static final Integer cassandraPort = 9160;
     protected static final String cassandraKeySpaceName = "Climate";

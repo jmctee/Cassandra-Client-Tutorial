@@ -1,5 +1,7 @@
 package com.jeklsoft.cassandraclient;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,12 +37,14 @@ public class TestEmbeddedCassandra {
         cassandraCommands.add("use " + embeddedCassandraKeySpaceName + ";");
         cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
 
-        EmbeddedCassandra embeddedCassandra = new EmbeddedCassandra();
-        embeddedCassandra.setCleanCassandra(true);
-        embeddedCassandra.setCassandraStartupCommands(cassandraCommands);
-        embeddedCassandra.setHostname(embeddedCassandraHostname);
-        embeddedCassandra.setHostport(embeddedCassandraPort);
-        embeddedCassandra.setCassandraConfigDirPath(configurationPath);
-        embeddedCassandra.init();
+        EmbeddedCassandra embeddedCassandra = EmbeddedCassandra.builder()
+                .withCleanDataStore()
+                .withStartupCommands(cassandraCommands)
+                .withHostname(embeddedCassandraHostname)
+                .withHostport(embeddedCassandraPort)
+                .withCassandaConfigurationDirectoryPath(configurationPath)
+                .build();
+
+        assertNotNull(embeddedCassandra);
     }
 }

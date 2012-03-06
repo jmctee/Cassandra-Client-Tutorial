@@ -2,6 +2,7 @@ package com.jeklsoft.cassandraclient;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,14 +13,60 @@ import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.service.EmbeddedCassandraService;
 
 public class EmbeddedCassandra {
-    private String cassandraConfigDirPath;
-    private List<String> cassandraStartupCommands;
+    private String cassandraConfigDirPath = "/tmp";
+    private List<String> cassandraStartupCommands = new ArrayList<String>();
 
     private boolean cleanCassandra = false;
     private String hostname = "localhost";
     private int hostport = 9160;
 
-    public void init() throws IOException {
+    public static EmbeddedCassandraBuilder builder() {
+        return new EmbeddedCassandraBuilder();
+    }
+
+    public static class EmbeddedCassandraBuilder {
+        private final EmbeddedCassandra instance = new EmbeddedCassandra();
+
+        public EmbeddedCassandraBuilder withCleanDataStore() {
+            instance.setCleanCassandra(true);
+            return this;
+        }
+
+        public EmbeddedCassandraBuilder withStartupCommands(List<String> cassandraCommands) {
+            instance.setCassandraStartupCommands(cassandraCommands);
+            return this;
+        }
+
+        public EmbeddedCassandraBuilder withHostname(String hostname) {
+            instance.setHostname(hostname);
+            return this;
+        }
+
+        public EmbeddedCassandraBuilder withHostport(int port) {
+            instance.setHostport(port);
+            return this;
+        }
+
+        public EmbeddedCassandraBuilder withCassandaConfigurationDirectoryPath(String path) {
+            instance.setCassandraConfigDirPath(path);
+            return this;
+        }
+
+        public EmbeddedCassandra build() {
+            try {
+                instance.init();
+                return instance;
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Error building embedded Cassandra instance", e);
+            }
+        }
+    }
+
+    private EmbeddedCassandra() {
+    }
+
+    private void init() throws IOException {
 
         setupStorageConfigPath();
 
@@ -35,7 +82,7 @@ public class EmbeddedCassandra {
         }
     }
 
-    protected void setupStorageConfigPath() throws IOException {
+    private void setupStorageConfigPath() throws IOException {
         if (cassandraConfigDirPath != null) {
             File configFile = new File(cassandraConfigDirPath);
             String configFileName = "file:" + configFile.getPath() + "/cassandra.yaml";
@@ -46,23 +93,23 @@ public class EmbeddedCassandra {
         }
     }
 
-    public void setCassandraConfigDirPath(String cassandraConfigDirPath) {
+    private void setCassandraConfigDirPath(String cassandraConfigDirPath) {
         this.cassandraConfigDirPath = cassandraConfigDirPath;
     }
 
-    public void setHostname(String hostname) {
+    private void setHostname(String hostname) {
         this.hostname = hostname;
     }
 
-    public void setHostport(int hostport) {
+    private void setHostport(int hostport) {
         this.hostport = hostport;
     }
 
-    public void setCassandraStartupCommands(List<String> cassandraCommands) {
+    private void setCassandraStartupCommands(List<String> cassandraCommands) {
         cassandraStartupCommands = cassandraCommands;
     }
 
-    public void setCleanCassandra(Boolean cleanCassandra) {
+    private void setCleanCassandra(Boolean cleanCassandra) {
         this.cleanCassandra = cleanCassandra;
     }
 

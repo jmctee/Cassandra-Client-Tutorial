@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import me.prettyprint.hector.api.Keyspace;
 
-public class TestHectorHeterogeneousSuperColumnExample extends BaseReadingsTest {
+public class TestHectorHeterogeneousSuperColumnExample extends HectorTest {
 
     private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
 
@@ -27,7 +27,7 @@ public class TestHectorHeterogeneousSuperColumnExample extends BaseReadingsTest 
             cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
         }
 
-        keyspace = TestUtils.configureHectorAccessToCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
+        keyspace = configureHectorAccessToCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
                 cassandraKeySpaceName, configurationPath, cassandraCommands);
     }
 

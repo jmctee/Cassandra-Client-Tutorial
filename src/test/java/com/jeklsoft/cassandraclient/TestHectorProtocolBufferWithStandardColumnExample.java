@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import me.prettyprint.hector.api.Keyspace;
 
-public class TestHectorProtocolBufferWithStandardColumnExample extends BaseReadingsTest {
+public class TestHectorProtocolBufferWithStandardColumnExample extends HectorTest {
     private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
 
     private static final Boolean useEmbeddedCassandra = true;
@@ -26,7 +26,7 @@ public class TestHectorProtocolBufferWithStandardColumnExample extends BaseReadi
             cassandraCommands.add("create column family " + columnFamilyName + ";");
         }
 
-        keyspace = TestUtils.configureHectorAccessToCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
+        keyspace = configureHectorAccessToCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
                 cassandraKeySpaceName, configurationPath, cassandraCommands);
     }
 

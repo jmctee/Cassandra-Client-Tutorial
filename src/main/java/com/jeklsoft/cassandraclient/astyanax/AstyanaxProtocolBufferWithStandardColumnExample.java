@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.astyanax;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.joda.time.Interval;
 
+import com.jeklsoft.cassandraclient.Reading;
+import com.jeklsoft.cassandraclient.ReadingsPersistor;
 import com.jeklsoft.cassandraclient.serializer.astyanax.ReadingSerializer;
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
@@ -41,7 +43,7 @@ Keyspace: "Climate" {
 */
 
 public class AstyanaxProtocolBufferWithStandardColumnExample implements ReadingsPersistor {
-    private static final Logger log = Logger.getLogger(HectorProtocolBufferWithStandardColumnExample.class);
+    private static final Logger log = Logger.getLogger(AstyanaxProtocolBufferWithStandardColumnExample.class);
 
     private final Keyspace keyspace;
     private final ColumnFamily<UUID, Long> columnFamilyInfo;

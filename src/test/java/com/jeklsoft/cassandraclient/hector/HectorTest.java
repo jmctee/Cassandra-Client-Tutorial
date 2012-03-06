@@ -1,8 +1,11 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.hector;
 
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.jeklsoft.cassandraclient.BaseReadingsTest;
+import com.jeklsoft.cassandraclient.TestUtils;
 
 import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.hector.api.Cluster;

@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.hector;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import com.jeklsoft.cassandraclient.Reading;
+import com.jeklsoft.cassandraclient.ReadingsPersistor;
 import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
 import com.jeklsoft.cassandraclient.serializer.hector.DateTimeSerializer;
 import com.jeklsoft.cassandraclient.serializer.hector.ExtendedTypeInferringSerializer;

@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.astyanax;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.jeklsoft.cassandraclient.BaseReadingsTest;
+import com.jeklsoft.cassandraclient.TestUtils;
 import com.netflix.astyanax.AstyanaxConfiguration;
 import com.netflix.astyanax.AstyanaxContext;
 import com.netflix.astyanax.Keyspace;
@@ -23,7 +25,7 @@ import com.netflix.astyanax.serializers.UUIDSerializer;
 import com.netflix.astyanax.thrift.ThriftFamilyFactory;
 
 public class TestAstyanaxProtocolBufferWithStandardColumnExample extends BaseReadingsTest {
-    private static final Logger log = Logger.getLogger(HectorHeterogeneousSuperColumnExample.class);
+    private static final Logger log = Logger.getLogger(TestAstyanaxProtocolBufferWithStandardColumnExample.class);
 
     private static final Boolean useEmbeddedCassandra = true;
 

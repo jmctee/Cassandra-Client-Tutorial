@@ -1,14 +1,16 @@
 package com.jeklsoft.cassandraclient.serializer.hector;
 
-import com.jeklsoft.cassandraclient.Reading;
-import com.jeklsoft.cassandraclient.serializer.ReadingSerializerUtils;
-import me.prettyprint.cassandra.serializers.AbstractSerializer;
-import me.prettyprint.hector.api.ddl.ComparatorType;
-import org.apache.log4j.Logger;
+import static me.prettyprint.hector.api.ddl.ComparatorType.BYTESTYPE;
 
 import java.nio.ByteBuffer;
 
-import static me.prettyprint.hector.api.ddl.ComparatorType.BYTESTYPE;
+import org.apache.log4j.Logger;
+
+import com.jeklsoft.cassandraclient.Reading;
+import com.jeklsoft.cassandraclient.serializer.ReadingSerializerUtils;
+
+import me.prettyprint.cassandra.serializers.AbstractSerializer;
+import me.prettyprint.hector.api.ddl.ComparatorType;
 
 public class ReadingSerializer extends AbstractSerializer<Reading> {
     private static final Logger log = Logger.getLogger(ReadingSerializer.class);

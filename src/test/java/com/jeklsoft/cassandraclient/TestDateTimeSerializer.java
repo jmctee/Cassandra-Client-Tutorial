@@ -1,14 +1,16 @@
 package com.jeklsoft.cassandraclient;
 
-import com.jeklsoft.cassandraclient.serializer.hector.DateTimeSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-import me.prettyprint.hector.api.Serializer;
-import org.joda.time.DateTime;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import static org.junit.Assert.assertEquals;
+import org.joda.time.DateTime;
+import org.junit.Test;
+
+import com.jeklsoft.cassandraclient.serializer.hector.DateTimeSerializer;
+import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
+
+import me.prettyprint.hector.api.Serializer;
 
 public class TestDateTimeSerializer {
     @Test

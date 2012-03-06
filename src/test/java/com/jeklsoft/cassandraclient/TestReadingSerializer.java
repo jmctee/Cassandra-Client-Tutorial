@@ -1,17 +1,19 @@
 package com.jeklsoft.cassandraclient;
 
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ReadingSerializer;
-import me.prettyprint.hector.api.Serializer;
-import org.joda.time.DateTime;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import org.joda.time.DateTime;
+import org.junit.Test;
+
+import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
+import com.jeklsoft.cassandraclient.serializer.hector.ReadingSerializer;
+
+import me.prettyprint.hector.api.Serializer;
 
 public class TestReadingSerializer {
     @Test

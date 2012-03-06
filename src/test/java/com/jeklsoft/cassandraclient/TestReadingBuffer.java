@@ -1,19 +1,21 @@
 package com.jeklsoft.cassandraclient;
 
-import com.google.protobuf.ByteString;
-import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
-import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
-import me.prettyprint.cassandra.serializers.UUIDSerializer;
-import me.prettyprint.hector.api.Serializer;
-import org.joda.time.DateTime;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import org.joda.time.DateTime;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.google.protobuf.ByteString;
+import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
+
+import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
+import me.prettyprint.cassandra.serializers.UUIDSerializer;
+import me.prettyprint.hector.api.Serializer;
 
 public class TestReadingBuffer {
 

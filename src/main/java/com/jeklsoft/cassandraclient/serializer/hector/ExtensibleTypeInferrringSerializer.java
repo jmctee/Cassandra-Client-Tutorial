@@ -1,14 +1,25 @@
 package com.jeklsoft.cassandraclient.serializer.hector;
 
-
-import me.prettyprint.cassandra.serializers.*;
-import me.prettyprint.hector.api.Serializer;
-
 import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import me.prettyprint.cassandra.serializers.AbstractSerializer;
+import me.prettyprint.cassandra.serializers.BooleanSerializer;
+import me.prettyprint.cassandra.serializers.ByteBufferSerializer;
+import me.prettyprint.cassandra.serializers.BytesArraySerializer;
+import me.prettyprint.cassandra.serializers.DateSerializer;
+import me.prettyprint.cassandra.serializers.DoubleSerializer;
+import me.prettyprint.cassandra.serializers.FloatSerializer;
+import me.prettyprint.cassandra.serializers.IntegerSerializer;
+import me.prettyprint.cassandra.serializers.LongSerializer;
+import me.prettyprint.cassandra.serializers.ObjectSerializer;
+import me.prettyprint.cassandra.serializers.ShortSerializer;
+import me.prettyprint.cassandra.serializers.StringSerializer;
+import me.prettyprint.cassandra.serializers.UUIDSerializer;
+import me.prettyprint.hector.api.Serializer;
 
 public class ExtensibleTypeInferrringSerializer {
 
@@ -49,9 +60,11 @@ public class ExtensibleTypeInferrringSerializer {
 
         if ((valueClass == null) || (ByteBuffer.class.isAssignableFrom(valueClass))) {
             serializer = ByteBufferSerializer.get();
-        } else if (serializers.containsKey(valueClass)) {
+        }
+        else if (serializers.containsKey(valueClass)) {
             serializer = serializers.get(valueClass);
-        } else {
+        }
+        else {
             serializer = ObjectSerializer.get();
         }
 

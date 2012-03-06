@@ -1,6 +1,21 @@
 package com.jeklsoft.cassandraclient;
 
-import com.jeklsoft.cassandraclient.serializer.hector.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
+import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
+import com.jeklsoft.cassandraclient.serializer.hector.DateTimeSerializer;
+import com.jeklsoft.cassandraclient.serializer.hector.ExtendedTypeInferringSerializer;
+import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
+import com.jeklsoft.cassandraclient.serializer.hector.ReadingSerializer;
+
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Keyspace;
@@ -11,15 +26,6 @@ import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SliceQuery;
-import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /*
 Cluster: SensorNet

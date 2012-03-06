@@ -1,16 +1,17 @@
 package com.jeklsoft.cassandraclient;
 
-import me.prettyprint.cassandra.service.CassandraHostConfigurator;
-import me.prettyprint.hector.api.Cluster;
-import me.prettyprint.hector.api.factory.HFactory;
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.net.URL;
-import java.util.List;
+import me.prettyprint.cassandra.service.CassandraHostConfigurator;
+import me.prettyprint.hector.api.Cluster;
+import me.prettyprint.hector.api.factory.HFactory;
 
 public class TestUtils {
     private static final Logger log = Logger.getLogger(TestUtils.class);
@@ -28,7 +29,8 @@ public class TestUtils {
             Cluster cluster = HFactory.getOrCreateCluster(cassandraClusterName, configurator);
             me.prettyprint.hector.api.Keyspace keyspace = HFactory.createKeyspace(cassandraKeySpaceName, cluster);
             return keyspace;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.log(Level.ERROR, "Error received", e);
             throw new RuntimeException(e.getMessage());
         }

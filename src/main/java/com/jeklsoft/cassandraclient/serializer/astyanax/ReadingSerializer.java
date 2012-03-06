@@ -1,11 +1,12 @@
 package com.jeklsoft.cassandraclient.serializer.astyanax;
 
+import java.nio.ByteBuffer;
+
+import org.apache.log4j.Logger;
+
 import com.jeklsoft.cassandraclient.Reading;
 import com.jeklsoft.cassandraclient.serializer.ReadingSerializerUtils;
 import com.netflix.astyanax.serializers.AbstractSerializer;
-import org.apache.log4j.Logger;
-
-import java.nio.ByteBuffer;
 
 public class ReadingSerializer extends AbstractSerializer<Reading> {
     private static final Logger log = Logger.getLogger(ReadingSerializer.class);

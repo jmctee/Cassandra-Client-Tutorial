@@ -1,20 +1,22 @@
 package com.jeklsoft.cassandraclient.serializer;
 
-import com.google.protobuf.ByteString;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.jeklsoft.cassandraclient.Reading;
-import com.jeklsoft.cassandraclient.ReadingBuffer;
-import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
-import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
-import me.prettyprint.cassandra.serializers.UUIDSerializer;
-import me.prettyprint.hector.api.Serializer;
-import org.joda.time.DateTime;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.UUID;
+
+import org.joda.time.DateTime;
+
+import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.jeklsoft.cassandraclient.Reading;
+import com.jeklsoft.cassandraclient.ReadingBuffer;
+import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
+
+import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
+import me.prettyprint.cassandra.serializers.UUIDSerializer;
+import me.prettyprint.hector.api.Serializer;
 
 public class ReadingSerializerUtils {
 
@@ -32,7 +34,8 @@ public class ReadingSerializerUtils {
             byte[] byteArray = Arrays.copyOfRange(byteBuffer.array(), startingIndex, endingIndex);
             ReadingBuffer.Reading bufferedReading = ReadingBuffer.Reading.newBuilder().mergeFrom(byteArray).build();
             return getReading(bufferedReading);
-        } catch (InvalidProtocolBufferException e) {
+        }
+        catch (InvalidProtocolBufferException e) {
             throw new RuntimeException("Error deserializing Reading", e);
         }
     }

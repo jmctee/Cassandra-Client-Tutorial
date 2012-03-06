@@ -1,9 +1,9 @@
 package com.jeklsoft.cassandraclient.serializer.hector;
 
+import java.nio.ByteBuffer;
+
 import me.prettyprint.cassandra.serializers.AbstractSerializer;
 import me.prettyprint.hector.api.Serializer;
-
-import java.nio.ByteBuffer;
 
 public class ExtendedTypeInferringSerializer<T> extends AbstractSerializer<T> implements Serializer<T> {
 

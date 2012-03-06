@@ -1,10 +1,29 @@
 package com.jeklsoft.cassandraclient;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
 import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
 import com.jeklsoft.cassandraclient.serializer.hector.DateTimeSerializer;
 import com.jeklsoft.cassandraclient.serializer.hector.ExtendedTypeInferringSerializer;
 import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-import me.prettyprint.cassandra.serializers.*;
+
+import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
+import me.prettyprint.cassandra.serializers.BooleanSerializer;
+import me.prettyprint.cassandra.serializers.ByteBufferSerializer;
+import me.prettyprint.cassandra.serializers.IntegerSerializer;
+import me.prettyprint.cassandra.serializers.LongSerializer;
+import me.prettyprint.cassandra.serializers.StringSerializer;
+import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.Serializer;
 import me.prettyprint.hector.api.beans.HColumn;
@@ -14,17 +33,6 @@ import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SuperSliceQuery;
-import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /*
 Cluster: SensorNet
@@ -180,15 +188,20 @@ public class HectorHeterogeneousSuperColumnExample implements ReadingsPersistor 
         for (HColumn<String, ByteBuffer> column : columns) {
             if (temperatureNameColumnName.equals(column.getName())) {
                 temperature = BigDecimalSerializer.get().fromByteBuffer(column.getValue());
-            } else if (windSpeedNameColumnName.equals(column.getName())) {
+            }
+            else if (windSpeedNameColumnName.equals(column.getName())) {
                 windSpeed = IntegerSerializer.get().fromByteBuffer(column.getValue());
-            } else if (windDirectionNameColumnName.equals(column.getName())) {
+            }
+            else if (windDirectionNameColumnName.equals(column.getName())) {
                 windDirection = StringSerializer.get().fromByteBuffer(column.getValue());
-            } else if (humidityNameColumnName.equals(column.getName())) {
+            }
+            else if (humidityNameColumnName.equals(column.getName())) {
                 humidity = BigIntegerSerializer.get().fromByteBuffer(column.getValue());
-            } else if (badAirQualityDetectedNameColumnName.equals(column.getName())) {
+            }
+            else if (badAirQualityDetectedNameColumnName.equals(column.getName())) {
                 badAirQualityDetected = BooleanSerializer.get().fromByteBuffer(column.getValue());
-            } else {
+            }
+            else {
                 throw new RuntimeException("Unknown column name " + column.getName());
             }
         }

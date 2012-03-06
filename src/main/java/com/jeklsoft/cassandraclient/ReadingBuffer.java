@@ -142,7 +142,8 @@ public final class ReadingBuffer {
             java.lang.Object ref = windDirection_;
             if (ref instanceof String) {
                 return (String) ref;
-            } else {
+            }
+            else {
                 com.google.protobuf.ByteString bs =
                         (com.google.protobuf.ByteString) ref;
                 String s = bs.toStringUtf8();
@@ -160,7 +161,8 @@ public final class ReadingBuffer {
                         com.google.protobuf.ByteString.copyFromUtf8((String) ref);
                 windDirection_ = b;
                 return b;
-            } else {
+            }
+            else {
                 return (com.google.protobuf.ByteString) ref;
             }
         }
@@ -333,7 +335,8 @@ public final class ReadingBuffer {
             Builder builder = newBuilder();
             if (builder.mergeDelimitedFrom(input)) {
                 return builder.buildParsed();
-            } else {
+            }
+            else {
                 return null;
             }
         }
@@ -345,7 +348,8 @@ public final class ReadingBuffer {
             Builder builder = newBuilder();
             if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
                 return builder.buildParsed();
-            } else {
+            }
+            else {
                 return null;
             }
         }
@@ -509,7 +513,8 @@ public final class ReadingBuffer {
             public Builder mergeFrom(com.google.protobuf.Message other) {
                 if (other instanceof com.jeklsoft.cassandraclient.ReadingBuffer.Reading) {
                     return mergeFrom((com.jeklsoft.cassandraclient.ReadingBuffer.Reading) other);
-                } else {
+                }
+                else {
                     super.mergeFrom(other);
                     return this;
                 }
@@ -560,54 +565,54 @@ public final class ReadingBuffer {
                 while (true) {
                     int tag = input.readTag();
                     switch (tag) {
-                        case 0:
+                    case 0:
+                        this.setUnknownFields(unknownFields.build());
+                        onChanged();
+                        return this;
+                    default: {
+                        if (!parseUnknownField(input, unknownFields,
+                                extensionRegistry, tag)) {
                             this.setUnknownFields(unknownFields.build());
                             onChanged();
                             return this;
-                        default: {
-                            if (!parseUnknownField(input, unknownFields,
-                                    extensionRegistry, tag)) {
-                                this.setUnknownFields(unknownFields.build());
-                                onChanged();
-                                return this;
-                            }
-                            break;
                         }
-                        case 10: {
-                            bitField0_ |= 0x00000001;
-                            sensorId_ = input.readBytes();
-                            break;
-                        }
-                        case 16: {
-                            bitField0_ |= 0x00000002;
-                            timestamp_ = input.readInt64();
-                            break;
-                        }
-                        case 26: {
-                            bitField0_ |= 0x00000004;
-                            temperature_ = input.readBytes();
-                            break;
-                        }
-                        case 32: {
-                            bitField0_ |= 0x00000008;
-                            windSpeed_ = input.readInt32();
-                            break;
-                        }
-                        case 42: {
-                            bitField0_ |= 0x00000010;
-                            windDirection_ = input.readBytes();
-                            break;
-                        }
-                        case 50: {
-                            bitField0_ |= 0x00000020;
-                            humidity_ = input.readBytes();
-                            break;
-                        }
-                        case 56: {
-                            bitField0_ |= 0x00000040;
-                            badAirQualityDetected_ = input.readBool();
-                            break;
-                        }
+                        break;
+                    }
+                    case 10: {
+                        bitField0_ |= 0x00000001;
+                        sensorId_ = input.readBytes();
+                        break;
+                    }
+                    case 16: {
+                        bitField0_ |= 0x00000002;
+                        timestamp_ = input.readInt64();
+                        break;
+                    }
+                    case 26: {
+                        bitField0_ |= 0x00000004;
+                        temperature_ = input.readBytes();
+                        break;
+                    }
+                    case 32: {
+                        bitField0_ |= 0x00000008;
+                        windSpeed_ = input.readInt32();
+                        break;
+                    }
+                    case 42: {
+                        bitField0_ |= 0x00000010;
+                        windDirection_ = input.readBytes();
+                        break;
+                    }
+                    case 50: {
+                        bitField0_ |= 0x00000020;
+                        humidity_ = input.readBytes();
+                        break;
+                    }
+                    case 56: {
+                        bitField0_ |= 0x00000040;
+                        badAirQualityDetected_ = input.readBool();
+                        break;
+                    }
                     }
                 }
             }
@@ -733,7 +738,8 @@ public final class ReadingBuffer {
                     String s = ((com.google.protobuf.ByteString) ref).toStringUtf8();
                     windDirection_ = s;
                     return s;
-                } else {
+                }
+                else {
                     return (String) ref;
                 }
             }

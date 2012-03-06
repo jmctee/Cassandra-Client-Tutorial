@@ -1,13 +1,13 @@
 package com.jeklsoft.cassandraclient.serializer.hector;
 
-import me.prettyprint.cassandra.serializers.AbstractSerializer;
-import me.prettyprint.cassandra.serializers.StringSerializer;
-import me.prettyprint.hector.api.ddl.ComparatorType;
+import static me.prettyprint.hector.api.ddl.ComparatorType.UTF8TYPE;
 
 import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 
-import static me.prettyprint.hector.api.ddl.ComparatorType.UTF8TYPE;
+import me.prettyprint.cassandra.serializers.AbstractSerializer;
+import me.prettyprint.cassandra.serializers.StringSerializer;
+import me.prettyprint.hector.api.ddl.ComparatorType;
 
 public class BigDecimalSerializer extends AbstractSerializer<BigDecimal> {
 

@@ -1,10 +1,6 @@
 package com.jeklsoft.cassandraclient;
 
-import com.jeklsoft.cassandraclient.serializer.hector.ExtendedTypeInferringSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,7 +13,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.jeklsoft.cassandraclient.serializer.hector.ExtendedTypeInferringSerializer;
+import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
+
+import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 
 public class TestExtendedTypeInferringSerializer {
 

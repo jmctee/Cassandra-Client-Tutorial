@@ -1,15 +1,15 @@
 package com.jeklsoft.cassandraclient;
 
-import org.apache.cassandra.cli.CliMain;
-import org.apache.cassandra.config.DatabaseDescriptor;
-import org.apache.cassandra.io.util.FileUtils;
-import org.apache.cassandra.service.EmbeddedCassandraService;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.cassandra.cli.CliMain;
+import org.apache.cassandra.config.DatabaseDescriptor;
+import org.apache.cassandra.io.util.FileUtils;
+import org.apache.cassandra.service.EmbeddedCassandraService;
 
 public class EmbeddedCassandra {
     private String cassandraConfigDirPath;
@@ -40,7 +40,8 @@ public class EmbeddedCassandra {
             File configFile = new File(cassandraConfigDirPath);
             String configFileName = "file:" + configFile.getPath() + "/cassandra.yaml";
             System.setProperty("cassandra.config", configFileName);
-        } else {
+        }
+        else {
             throw new IOException("Neither cassandraConfigDirResource nor cassandraConfigDirPath is configured, bailing.");
         }
     }
@@ -71,7 +72,8 @@ public class EmbeddedCassandra {
         for (String command : cassandraStartupCommands) {
             try {
                 CliMain.processStatement(command);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }

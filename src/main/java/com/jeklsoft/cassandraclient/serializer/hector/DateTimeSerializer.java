@@ -1,12 +1,13 @@
 package com.jeklsoft.cassandraclient.serializer.hector;
 
-import me.prettyprint.cassandra.serializers.AbstractSerializer;
-import me.prettyprint.hector.api.ddl.ComparatorType;
-import org.joda.time.DateTime;
+import static me.prettyprint.hector.api.ddl.ComparatorType.LONGTYPE;
 
 import java.nio.ByteBuffer;
 
-import static me.prettyprint.hector.api.ddl.ComparatorType.LONGTYPE;
+import org.joda.time.DateTime;
+
+import me.prettyprint.cassandra.serializers.AbstractSerializer;
+import me.prettyprint.hector.api.ddl.ComparatorType;
 
 public final class DateTimeSerializer extends AbstractSerializer<DateTime> {
 

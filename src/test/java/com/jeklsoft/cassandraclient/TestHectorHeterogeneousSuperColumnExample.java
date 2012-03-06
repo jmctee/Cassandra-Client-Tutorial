@@ -1,12 +1,13 @@
 package com.jeklsoft.cassandraclient;
 
-import me.prettyprint.hector.api.Keyspace;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import me.prettyprint.hector.api.Keyspace;
 
 public class TestHectorHeterogeneousSuperColumnExample extends BaseReadingsTest {
 

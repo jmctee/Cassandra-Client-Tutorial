@@ -1,9 +1,9 @@
 package com.jeklsoft.cassandraclient;
 
-import org.joda.time.Interval;
-
 import java.util.List;
 import java.util.UUID;
+
+import org.joda.time.Interval;
 
 public interface ReadingsPersistor {
     void addReadings(final List<Reading> readings);

@@ -1,9 +1,6 @@
 package com.jeklsoft.cassandraclient;
 
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-import me.prettyprint.cassandra.serializers.*;
-import me.prettyprint.hector.api.Serializer;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -12,7 +9,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
+
+import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
+import me.prettyprint.cassandra.serializers.BooleanSerializer;
+import me.prettyprint.cassandra.serializers.ByteBufferSerializer;
+import me.prettyprint.cassandra.serializers.BytesArraySerializer;
+import me.prettyprint.cassandra.serializers.DateSerializer;
+import me.prettyprint.cassandra.serializers.DoubleSerializer;
+import me.prettyprint.cassandra.serializers.FloatSerializer;
+import me.prettyprint.cassandra.serializers.IntegerSerializer;
+import me.prettyprint.cassandra.serializers.LongSerializer;
+import me.prettyprint.cassandra.serializers.ObjectSerializer;
+import me.prettyprint.cassandra.serializers.ShortSerializer;
+import me.prettyprint.cassandra.serializers.StringSerializer;
+import me.prettyprint.cassandra.serializers.UUIDSerializer;
+import me.prettyprint.hector.api.Serializer;
 
 public class TestExtensibleTypeInferrringSerializer {
 

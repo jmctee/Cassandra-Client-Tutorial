@@ -1,5 +1,13 @@
 package com.jeklsoft.cassandraclient;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.log4j.Logger;
+import org.joda.time.Interval;
+
 import com.jeklsoft.cassandraclient.serializer.astyanax.ReadingSerializer;
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
@@ -11,13 +19,6 @@ import com.netflix.astyanax.model.ColumnFamily;
 import com.netflix.astyanax.model.ColumnList;
 import com.netflix.astyanax.query.RowQuery;
 import com.netflix.astyanax.util.RangeBuilder;
-import org.apache.log4j.Logger;
-import org.joda.time.Interval;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 
 /*
 Cluster: SensorNet
@@ -62,7 +63,8 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
 
         try {
             OperationResult<Void> result = m.execute();
-        } catch (ConnectionException e) {
+        }
+        catch (ConnectionException e) {
             throw new RuntimeException("Storage of readings failed", e);
         }
     }
@@ -92,7 +94,8 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
                 Reading reading = (Reading) column.getValue(ReadingSerializer.get());
                 readings.add(reading);
             }
-        } catch (ConnectionException e) {
+        }
+        catch (ConnectionException e) {
             throw new RuntimeException("Query failed", e);
         }
 

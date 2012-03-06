@@ -7,9 +7,6 @@ import java.nio.ByteBuffer;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import com.jeklsoft.cassandraclient.serializer.hector.DateTimeSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-
 import me.prettyprint.hector.api.Serializer;
 
 public class TestDateTimeSerializer {

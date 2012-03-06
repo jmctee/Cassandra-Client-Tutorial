@@ -11,8 +11,6 @@ import java.util.UUID;
 
 import org.junit.Test;
 
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.BooleanSerializer;
 import me.prettyprint.cassandra.serializers.ByteBufferSerializer;

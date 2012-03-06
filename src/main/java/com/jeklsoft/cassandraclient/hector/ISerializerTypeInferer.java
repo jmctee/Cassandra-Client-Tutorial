@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient.serializer.hector;
+package com.jeklsoft.cassandraclient.hector;
 
 import me.prettyprint.hector.api.Serializer;
 

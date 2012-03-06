@@ -7,9 +7,6 @@ import java.nio.ByteBuffer;
 
 import org.junit.Test;
 
-import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-
 import me.prettyprint.hector.api.Serializer;
 
 public class TestBigDecimalSerializer {

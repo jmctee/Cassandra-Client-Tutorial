@@ -12,11 +12,6 @@ import org.joda.time.Interval;
 
 import com.jeklsoft.cassandraclient.Reading;
 import com.jeklsoft.cassandraclient.ReadingsPersistor;
-import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.DateTimeSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtendedTypeInferringSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ReadingSerializer;
 
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;

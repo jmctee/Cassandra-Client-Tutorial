@@ -7,7 +7,6 @@ import java.nio.ByteBuffer;
 
 import org.junit.Test;
 
-import com.jeklsoft.cassandraclient.serializer.astyanax.BigDecimalSerializer;
 import com.netflix.astyanax.Serializer;
 
 public class TestBigDecimalSerializer {

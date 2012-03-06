@@ -16,9 +16,6 @@ import java.util.UUID;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.jeklsoft.cassandraclient.serializer.hector.ExtendedTypeInferringSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 
 public class TestExtendedTypeInferringSerializer {

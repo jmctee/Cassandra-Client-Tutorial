@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import com.jeklsoft.cassandraclient.Reading;
 import com.jeklsoft.cassandraclient.ReadingsPersistor;
-import com.jeklsoft.cassandraclient.serializer.astyanax.ReadingSerializer;
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
 import com.netflix.astyanax.connectionpool.OperationResult;
@@ -46,10 +46,10 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
     private static final Logger log = Logger.getLogger(AstyanaxProtocolBufferWithStandardColumnExample.class);
 
     private final Keyspace keyspace;
-    private final ColumnFamily<UUID, Long> columnFamilyInfo;
+    private final ColumnFamily<UUID, DateTime> columnFamilyInfo;
     private final int ttl = 365 * 24 * 60 * 60; // 1 year in seconds
 
-    public AstyanaxProtocolBufferWithStandardColumnExample(Keyspace keyspace, ColumnFamily<UUID, Long> columnFamilyInfo) {
+    public AstyanaxProtocolBufferWithStandardColumnExample(Keyspace keyspace, ColumnFamily<UUID, DateTime> columnFamilyInfo) {
         this.keyspace = keyspace;
         this.columnFamilyInfo = columnFamilyInfo;
     }
@@ -60,7 +60,7 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
 
         for (Reading reading : readings) {
             m.withRow(columnFamilyInfo, reading.getSensorId())
-                    .putColumn(reading.getTimestamp().getMillis(), reading, ReadingSerializer.get(), ttl);
+                    .putColumn(reading.getTimestamp(), reading, ReadingSerializer.get(), ttl);
         }
 
         try {
@@ -81,7 +81,7 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
                 .setEnd(interval.getEndMillis())
                 .build();
 
-        RowQuery<UUID, Long> query = keyspace.prepareQuery(columnFamilyInfo)
+        RowQuery<UUID, DateTime> query = keyspace.prepareQuery(columnFamilyInfo)
                 .getKey(sensorId)
                 .autoPaginate(true)
                 .withColumnRange(range);

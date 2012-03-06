@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient.serializer.hector;
+package com.jeklsoft.cassandraclient.hector;
 
 import static me.prettyprint.hector.api.ddl.ComparatorType.UTF8TYPE;
 

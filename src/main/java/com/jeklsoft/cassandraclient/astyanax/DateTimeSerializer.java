@@ -1,15 +1,15 @@
-package com.jeklsoft.cassandraclient.serializer.hector;
+package com.jeklsoft.cassandraclient.astyanax;
 
-import static me.prettyprint.hector.api.ddl.ComparatorType.LONGTYPE;
+import static com.netflix.astyanax.serializers.ComparatorType.LONGTYPE;
 
 import java.nio.ByteBuffer;
 
 import org.joda.time.DateTime;
 
-import me.prettyprint.cassandra.serializers.AbstractSerializer;
-import me.prettyprint.hector.api.ddl.ComparatorType;
+import com.netflix.astyanax.serializers.AbstractSerializer;
+import com.netflix.astyanax.serializers.ComparatorType;
 
-public final class DateTimeSerializer extends AbstractSerializer<DateTime> {
+public class DateTimeSerializer extends AbstractSerializer<DateTime> {
 
     private static final DateTimeSerializer instance = new DateTimeSerializer();
 

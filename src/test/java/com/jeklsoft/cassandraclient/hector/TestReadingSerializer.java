@@ -11,8 +11,6 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import com.jeklsoft.cassandraclient.Reading;
-import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
-import com.jeklsoft.cassandraclient.serializer.hector.ReadingSerializer;
 
 import me.prettyprint.hector.api.Serializer;
 

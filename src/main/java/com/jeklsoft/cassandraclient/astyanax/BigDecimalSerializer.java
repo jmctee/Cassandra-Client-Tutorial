@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient.serializer.astyanax;
+package com.jeklsoft.cassandraclient.astyanax;
 
 import static com.netflix.astyanax.serializers.ComparatorType.UTF8TYPE;
 

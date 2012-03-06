@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import com.google.protobuf.ByteString;
 import com.jeklsoft.cassandraclient.ReadingBuffer.Reading;
-import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
+import com.jeklsoft.cassandraclient.hector.BigDecimalSerializer;
 
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;

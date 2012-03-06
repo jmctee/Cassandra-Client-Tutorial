@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient.serializer.astyanax;
+package com.jeklsoft.cassandraclient.hector;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -13,10 +13,11 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.jeklsoft.cassandraclient.Reading;
 import com.jeklsoft.cassandraclient.ReadingBuffer;
-import com.netflix.astyanax.Serializer;
-import com.netflix.astyanax.serializers.AbstractSerializer;
-import com.netflix.astyanax.serializers.BigIntegerSerializer;
-import com.netflix.astyanax.serializers.UUIDSerializer;
+
+import me.prettyprint.cassandra.serializers.AbstractSerializer;
+import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
+import me.prettyprint.cassandra.serializers.UUIDSerializer;
+import me.prettyprint.hector.api.Serializer;
 
 public class ReadingSerializer extends AbstractSerializer<Reading> {
     private static final Logger log = Logger.getLogger(ReadingSerializer.class);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,7 +21,6 @@ import com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl;
 import com.netflix.astyanax.connectionpool.impl.CountingConnectionPoolMonitor;
 import com.netflix.astyanax.impl.AstyanaxConfigurationImpl;
 import com.netflix.astyanax.model.ColumnFamily;
-import com.netflix.astyanax.serializers.LongSerializer;
 import com.netflix.astyanax.serializers.UUIDSerializer;
 import com.netflix.astyanax.thrift.ThriftFamilyFactory;
 
@@ -31,7 +31,7 @@ public class TestAstyanaxProtocolBufferWithStandardColumnExample extends BaseRea
 
     private static AstyanaxContext<Keyspace> context;
     private static Keyspace keyspace;
-    private static ColumnFamily<UUID, Long> CF_USER_INFO;
+    private static ColumnFamily<UUID, DateTime> CF_USER_INFO;
 
     @BeforeClass
     public static void configureCassandra() throws Exception {
@@ -69,9 +69,9 @@ public class TestAstyanaxProtocolBufferWithStandardColumnExample extends BaseRea
 
         keyspace = context.getEntity();
 
-        CF_USER_INFO = new ColumnFamily<UUID, Long>(columnFamilyName,
+        CF_USER_INFO = new ColumnFamily<UUID, DateTime>(columnFamilyName,
                 UUIDSerializer.get(),   // Key Serializer
-                LongSerializer.get());  // Column Serializer
+                DateTimeSerializer.get());  // Column Serializer
     }
 
     @Test

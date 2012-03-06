@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import com.jeklsoft.cassandraclient.Reading;
-import com.jeklsoft.cassandraclient.serializer.astyanax.ReadingSerializer;
 import com.netflix.astyanax.Serializer;
 
 public class TestReadingSerializer {

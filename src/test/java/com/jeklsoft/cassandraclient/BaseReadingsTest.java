@@ -64,6 +64,7 @@ public class BaseReadingsTest {
         assertEquals(expectedReadings.size(), returnedReadings.size());
 
         for (Reading expectedReading : expectedReadings) {
+            log.info("Sensor1: " + expectedReading);
             assertTrue(returnedReadings.contains(expectedReading));
         }
 
@@ -84,6 +85,7 @@ public class BaseReadingsTest {
         assertEquals(expectedReadings.size(), returnedReadings.size());
 
         for (Reading expectedReading : expectedReadings) {
+            log.info("Sensor2: " + expectedReading);
             assertTrue(returnedReadings.contains(expectedReading));
         }
     }

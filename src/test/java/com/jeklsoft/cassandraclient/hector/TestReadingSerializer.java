@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.hector;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
+import com.jeklsoft.cassandraclient.Reading;
 import com.jeklsoft.cassandraclient.serializer.hector.ExtensibleTypeInferrringSerializer;
 import com.jeklsoft.cassandraclient.serializer.hector.ReadingSerializer;
 

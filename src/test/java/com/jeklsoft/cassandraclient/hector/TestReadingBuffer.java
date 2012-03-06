@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.hector;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.google.protobuf.ByteString;
+import com.jeklsoft.cassandraclient.ReadingBuffer;
+import com.jeklsoft.cassandraclient.ReadingBuffer.Reading;
 import com.jeklsoft.cassandraclient.serializer.hector.BigDecimalSerializer;
 
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
@@ -27,7 +29,7 @@ public class TestReadingBuffer {
     private BigInteger humidity;
     private Boolean badAirQualityDetected;
 
-    ReadingBuffer.Reading reading;
+    Reading reading;
 
     @Before
     public void setup() {
@@ -58,7 +60,7 @@ public class TestReadingBuffer {
 
         byte[] array = reading.toByteArray();
 
-        ReadingBuffer.Reading newReading = ReadingBuffer.Reading.newBuilder().mergeFrom(array).build();
+        Reading newReading = ReadingBuffer.Reading.newBuilder().mergeFrom(array).build();
 
         assertEquals(reading, newReading);
 

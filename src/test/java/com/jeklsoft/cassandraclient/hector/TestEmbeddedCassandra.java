@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.hector;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -10,6 +10,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.jeklsoft.cassandraclient.EmbeddedCassandra;
 
 public class TestEmbeddedCassandra {
 

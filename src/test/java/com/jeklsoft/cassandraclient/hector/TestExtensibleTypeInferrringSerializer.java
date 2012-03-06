@@ -1,4 +1,4 @@
-package com.jeklsoft.cassandraclient;
+package com.jeklsoft.cassandraclient.hector;
 
 import static org.junit.Assert.assertEquals;
 

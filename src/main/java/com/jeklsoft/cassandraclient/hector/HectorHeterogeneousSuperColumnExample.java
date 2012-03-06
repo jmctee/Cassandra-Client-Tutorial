@@ -99,6 +99,7 @@ public class HectorHeterogeneousSuperColumnExample implements ReadingsPersistor 
 
     private final Keyspace keyspace;
     private final String columnFamilyName;
+    private final int ttl = 365 * 24 * 60 * 60; // 1 year in seconds
 
     public HectorHeterogeneousSuperColumnExample(Keyspace keyspace, String columnFamilyName) {
         this.keyspace = keyspace;
@@ -117,23 +118,23 @@ public class HectorHeterogeneousSuperColumnExample implements ReadingsPersistor 
             HColumn temperatureColumn = HFactory.createColumn(temperatureNameColumnName,
                     reading.getTemperature(),
                     genericOutputSerializer,
-                    genericOutputSerializer);
+                    genericOutputSerializer).setTtl(ttl);
             HColumn windSpeedColumn = HFactory.createColumn(windSpeedNameColumnName,
                     reading.getWindSpeed(),
                     genericOutputSerializer,
-                    genericOutputSerializer);
+                    genericOutputSerializer).setTtl(ttl);
             HColumn windDirectionColumn = HFactory.createColumn(windDirectionNameColumnName,
                     reading.getDirection(),
                     genericOutputSerializer,
-                    genericOutputSerializer);
+                    genericOutputSerializer).setTtl(ttl);
             HColumn humidityColumn = HFactory.createColumn(humidityNameColumnName,
                     reading.getHumidity(),
                     genericOutputSerializer,
-                    genericOutputSerializer);
+                    genericOutputSerializer).setTtl(ttl);
             HColumn badAirQualityDetectedColumn = HFactory.createColumn(badAirQualityDetectedNameColumnName,
                     reading.getBadAirQualityDetected(),
                     genericOutputSerializer,
-                    genericOutputSerializer);
+                    genericOutputSerializer).setTtl(ttl);
 
             List columnList = new ArrayList();
             columnList.add(temperatureColumn);

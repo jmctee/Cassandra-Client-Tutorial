@@ -54,6 +54,7 @@ public class HectorProtocolBufferWithStandardColumnExample implements ReadingsPe
 
     private final Keyspace keyspace;
     private final String columnFamilyName;
+    private final int ttl = 365 * 24 * 60 * 60; // 1 year in seconds
 
     public HectorProtocolBufferWithStandardColumnExample(Keyspace keyspace, String columnFamilyName) {
         this.keyspace = keyspace;
@@ -73,7 +74,7 @@ public class HectorProtocolBufferWithStandardColumnExample implements ReadingsPe
             HColumn column = HFactory.createColumn(reading.getTimestamp(),
                     reading,
                     genericOutputSerializer,
-                    genericOutputSerializer);
+                    genericOutputSerializer).setTtl(ttl);
 
             mutator.addInsertion(reading.getSensorId(), columnFamilyName, column);
         }

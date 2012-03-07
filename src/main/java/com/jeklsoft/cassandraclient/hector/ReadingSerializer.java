@@ -4,10 +4,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -16,7 +14,6 @@ import com.jeklsoft.cassandraclient.ReadingBuffer;
 
 import me.prettyprint.cassandra.serializers.AbstractSerializer;
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
-import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Serializer;
 
 public class ReadingSerializer extends AbstractSerializer<Reading> {
@@ -52,8 +49,6 @@ public class ReadingSerializer extends AbstractSerializer<Reading> {
 
     private static ReadingBuffer.Reading getBufferedReading(Reading reading) {
         return ReadingBuffer.Reading.newBuilder()
-                .setSensorId(getByteString(UUIDSerializer.get(), reading.getSensorId()))
-                .setTimestamp(reading.getTimestamp().getMillis())
                 .setTemperature(getByteString(BigDecimalSerializer.get(), reading.getTemperature()))
                 .setWindSpeed(reading.getWindSpeed())
                 .setWindDirection(reading.getDirection())
@@ -63,9 +58,7 @@ public class ReadingSerializer extends AbstractSerializer<Reading> {
     }
 
     private static Reading getReading(ReadingBuffer.Reading bufferedReading) {
-        return new Reading((UUID) getObject(UUIDSerializer.get(), bufferedReading.getSensorId()),
-                new DateTime(bufferedReading.getTimestamp()),
-                (BigDecimal) getObject(BigDecimalSerializer.get(), bufferedReading.getTemperature()),
+        return new Reading((BigDecimal) getObject(BigDecimalSerializer.get(), bufferedReading.getTemperature()),
                 bufferedReading.getWindSpeed(),
                 bufferedReading.getWindDirection(),
                 (BigInteger) getObject(BigIntegerSerializer.get(), bufferedReading.getHumidity()),

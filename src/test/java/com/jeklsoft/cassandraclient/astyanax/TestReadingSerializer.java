@@ -19,12 +19,15 @@ public class TestReadingSerializer {
 
     @Test
     public void SerializingThenDeserializingReadingResultsInSameReading() {
-        Reading reading = new Reading(UUID.randomUUID(), new DateTime(), new BigDecimal(195).movePointLeft(1),
+        UUID uuid = UUID.randomUUID();
+        DateTime date = new DateTime();
+
+        Reading reading = new Reading(uuid, date, new BigDecimal(195).movePointLeft(1),
                 24, "ESE", BigInteger.valueOf(17L), false);
 
         ByteBuffer buffer = serializer.toByteBuffer(reading);
 
-        Reading deserializedReading = (Reading) serializer.fromByteBuffer(buffer);
+        Reading deserializedReading = new Reading(uuid, date, (Reading) serializer.fromByteBuffer(buffer));
 
         assertEquals(reading, deserializedReading);
     }

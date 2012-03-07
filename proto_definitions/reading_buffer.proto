@@ -4,11 +4,9 @@ option java_package = "com.jeklsoft.cassandraclient";
 option java_outer_classname = "ReadingBuffer";
 
 message Reading {
-  required bytes sensor_id = 1; // UUID
-  optional int64 timestamp = 2; // DateTime
-  optional bytes temperature = 3; // BigDecimal
-  optional int32 wind_speed = 4; // Integer
-  optional string wind_direction = 5; // String
-  optional bytes humidity = 6; // BigInteger
-  optional bool bad_air_quality_detected = 7; // Boolean
+  optional bytes temperature = 1; // BigDecimal
+  optional int32 wind_speed = 2; // Integer
+  optional string wind_direction = 3; // String
+  optional bytes humidity = 4; // BigInteger
+  optional bool bad_air_quality_detected = 5; // Boolean
 }

@@ -30,6 +30,27 @@ public class Reading {
         this.badAirQualityDetected = badAirQualityDetected;
     }
 
+    public Reading(BigDecimal temperature, Integer windSpeed, String direction,
+                   BigInteger humidity, Boolean badAirQualityDetected) {
+        this.sensorId = null;
+        this.timestamp = null;
+        this.temperature = temperature;
+        this.windSpeed = windSpeed;
+        this.direction = direction;
+        this.humidity = humidity;
+        this.badAirQualityDetected = badAirQualityDetected;
+    }
+
+    public Reading(UUID sensorId, DateTime timestamp, Reading reading) {
+        this.sensorId = sensorId;
+        this.timestamp = timestamp;
+        this.temperature = reading.getTemperature();
+        this.windSpeed = reading.getWindSpeed();
+        this.direction = reading.getDirection();
+        this.humidity = reading.getHumidity();
+        this.badAirQualityDetected = reading.getBadAirQualityDetected();
+    }
+
     public UUID getSensorId() {
         return sensorId;
     }

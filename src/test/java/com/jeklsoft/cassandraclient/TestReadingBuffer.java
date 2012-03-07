@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.UUID;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,13 +13,10 @@ import com.jeklsoft.cassandraclient.ReadingBuffer.Reading;
 import com.jeklsoft.cassandraclient.hector.BigDecimalSerializer;
 
 import me.prettyprint.cassandra.serializers.BigIntegerSerializer;
-import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Serializer;
 
 public class TestReadingBuffer {
 
-    private UUID uuid;
-    private DateTime timestamp;
     private BigDecimal temperature;
     private int windSpeed;
     private String windDirection;
@@ -32,8 +27,6 @@ public class TestReadingBuffer {
 
     @Before
     public void setup() {
-        uuid = UUID.randomUUID();
-        timestamp = new DateTime();
         temperature = new BigDecimal(195).movePointLeft(1);
         windSpeed = 27;
         windDirection = "ESE";
@@ -45,8 +38,6 @@ public class TestReadingBuffer {
 
     @Test
     public void canCreateReadingBuffer() {
-        assertEquals(uuid, getObject(UUIDSerializer.get(), reading.getSensorId()));
-        assertEquals(timestamp, new DateTime(reading.getTimestamp()));
         assertEquals(temperature, getObject(BigDecimalSerializer.get(), reading.getTemperature()));
         assertEquals(windSpeed, reading.getWindSpeed());
         assertEquals(windDirection, reading.getWindDirection());
@@ -67,8 +58,6 @@ public class TestReadingBuffer {
 
     private ReadingBuffer.Reading build() {
         return ReadingBuffer.Reading.newBuilder()
-                .setSensorId(getByteString(UUIDSerializer.get(), uuid))
-                .setTimestamp(timestamp.getMillis())
                 .setTemperature(getByteString(BigDecimalSerializer.get(), temperature))
                 .setWindSpeed(windSpeed)
                 .setWindDirection(windDirection)

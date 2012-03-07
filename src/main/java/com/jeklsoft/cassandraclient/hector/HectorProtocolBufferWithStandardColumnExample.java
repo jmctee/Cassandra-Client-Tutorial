@@ -97,7 +97,8 @@ public class HectorProtocolBufferWithStandardColumnExample implements ReadingsPe
         List<Reading> readings = new ArrayList<Reading>();
 
         for (HColumn column : columns) {
-            Reading reading = (Reading) column.getValue();
+            DateTime timestamp = (DateTime) column.getName();
+            Reading reading = new Reading(sensorId, timestamp, (Reading) column.getValue());
             readings.add(reading);
         }
 

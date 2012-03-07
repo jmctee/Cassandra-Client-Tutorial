@@ -14,37 +14,27 @@ public final class ReadingBuffer {
     public interface ReadingOrBuilder
             extends com.google.protobuf.MessageOrBuilder {
 
-        // required bytes sensor_id = 1;
-        boolean hasSensorId();
-
-        com.google.protobuf.ByteString getSensorId();
-
-        // optional int64 timestamp = 2;
-        boolean hasTimestamp();
-
-        long getTimestamp();
-
-        // optional bytes temperature = 3;
+        // optional bytes temperature = 1;
         boolean hasTemperature();
 
         com.google.protobuf.ByteString getTemperature();
 
-        // optional int32 wind_speed = 4;
+        // optional int32 wind_speed = 2;
         boolean hasWindSpeed();
 
         int getWindSpeed();
 
-        // optional string wind_direction = 5;
+        // optional string wind_direction = 3;
         boolean hasWindDirection();
 
         String getWindDirection();
 
-        // optional bytes humidity = 6;
+        // optional bytes humidity = 4;
         boolean hasHumidity();
 
         com.google.protobuf.ByteString getHumidity();
 
-        // optional bool bad_air_quality_detected = 7;
+        // optional bool bad_air_quality_detected = 5;
         boolean hasBadAirQualityDetected();
 
         boolean getBadAirQualityDetected();
@@ -73,69 +63,45 @@ public final class ReadingBuffer {
 
         public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-            return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_hector_Reading_descriptor;
+            return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_cassandraclient_Reading_descriptor;
         }
 
         protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-            return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_hector_Reading_fieldAccessorTable;
+            return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_cassandraclient_Reading_fieldAccessorTable;
         }
 
         private int bitField0_;
-        // required bytes sensor_id = 1;
-        public static final int SENSOR_ID_FIELD_NUMBER = 1;
-        private com.google.protobuf.ByteString sensorId_;
-
-        public boolean hasSensorId() {
-            return ((bitField0_ & 0x00000001) == 0x00000001);
-        }
-
-        public com.google.protobuf.ByteString getSensorId() {
-            return sensorId_;
-        }
-
-        // optional int64 timestamp = 2;
-        public static final int TIMESTAMP_FIELD_NUMBER = 2;
-        private long timestamp_;
-
-        public boolean hasTimestamp() {
-            return ((bitField0_ & 0x00000002) == 0x00000002);
-        }
-
-        public long getTimestamp() {
-            return timestamp_;
-        }
-
-        // optional bytes temperature = 3;
-        public static final int TEMPERATURE_FIELD_NUMBER = 3;
+        // optional bytes temperature = 1;
+        public static final int TEMPERATURE_FIELD_NUMBER = 1;
         private com.google.protobuf.ByteString temperature_;
 
         public boolean hasTemperature() {
-            return ((bitField0_ & 0x00000004) == 0x00000004);
+            return ((bitField0_ & 0x00000001) == 0x00000001);
         }
 
         public com.google.protobuf.ByteString getTemperature() {
             return temperature_;
         }
 
-        // optional int32 wind_speed = 4;
-        public static final int WIND_SPEED_FIELD_NUMBER = 4;
+        // optional int32 wind_speed = 2;
+        public static final int WIND_SPEED_FIELD_NUMBER = 2;
         private int windSpeed_;
 
         public boolean hasWindSpeed() {
-            return ((bitField0_ & 0x00000008) == 0x00000008);
+            return ((bitField0_ & 0x00000002) == 0x00000002);
         }
 
         public int getWindSpeed() {
             return windSpeed_;
         }
 
-        // optional string wind_direction = 5;
-        public static final int WIND_DIRECTION_FIELD_NUMBER = 5;
+        // optional string wind_direction = 3;
+        public static final int WIND_DIRECTION_FIELD_NUMBER = 3;
         private java.lang.Object windDirection_;
 
         public boolean hasWindDirection() {
-            return ((bitField0_ & 0x00000010) == 0x00000010);
+            return ((bitField0_ & 0x00000004) == 0x00000004);
         }
 
         public String getWindDirection() {
@@ -167,24 +133,24 @@ public final class ReadingBuffer {
             }
         }
 
-        // optional bytes humidity = 6;
-        public static final int HUMIDITY_FIELD_NUMBER = 6;
+        // optional bytes humidity = 4;
+        public static final int HUMIDITY_FIELD_NUMBER = 4;
         private com.google.protobuf.ByteString humidity_;
 
         public boolean hasHumidity() {
-            return ((bitField0_ & 0x00000020) == 0x00000020);
+            return ((bitField0_ & 0x00000008) == 0x00000008);
         }
 
         public com.google.protobuf.ByteString getHumidity() {
             return humidity_;
         }
 
-        // optional bool bad_air_quality_detected = 7;
-        public static final int BAD_AIR_QUALITY_DETECTED_FIELD_NUMBER = 7;
+        // optional bool bad_air_quality_detected = 5;
+        public static final int BAD_AIR_QUALITY_DETECTED_FIELD_NUMBER = 5;
         private boolean badAirQualityDetected_;
 
         public boolean hasBadAirQualityDetected() {
-            return ((bitField0_ & 0x00000040) == 0x00000040);
+            return ((bitField0_ & 0x00000010) == 0x00000010);
         }
 
         public boolean getBadAirQualityDetected() {
@@ -192,8 +158,6 @@ public final class ReadingBuffer {
         }
 
         private void initFields() {
-            sensorId_ = com.google.protobuf.ByteString.EMPTY;
-            timestamp_ = 0L;
             temperature_ = com.google.protobuf.ByteString.EMPTY;
             windSpeed_ = 0;
             windDirection_ = "";
@@ -207,10 +171,6 @@ public final class ReadingBuffer {
             byte isInitialized = memoizedIsInitialized;
             if (isInitialized != -1) return isInitialized == 1;
 
-            if (!hasSensorId()) {
-                memoizedIsInitialized = 0;
-                return false;
-            }
             memoizedIsInitialized = 1;
             return true;
         }
@@ -219,25 +179,19 @@ public final class ReadingBuffer {
                 throws java.io.IOException {
             getSerializedSize();
             if (((bitField0_ & 0x00000001) == 0x00000001)) {
-                output.writeBytes(1, sensorId_);
+                output.writeBytes(1, temperature_);
             }
             if (((bitField0_ & 0x00000002) == 0x00000002)) {
-                output.writeInt64(2, timestamp_);
+                output.writeInt32(2, windSpeed_);
             }
             if (((bitField0_ & 0x00000004) == 0x00000004)) {
-                output.writeBytes(3, temperature_);
+                output.writeBytes(3, getWindDirectionBytes());
             }
             if (((bitField0_ & 0x00000008) == 0x00000008)) {
-                output.writeInt32(4, windSpeed_);
+                output.writeBytes(4, humidity_);
             }
             if (((bitField0_ & 0x00000010) == 0x00000010)) {
-                output.writeBytes(5, getWindDirectionBytes());
-            }
-            if (((bitField0_ & 0x00000020) == 0x00000020)) {
-                output.writeBytes(6, humidity_);
-            }
-            if (((bitField0_ & 0x00000040) == 0x00000040)) {
-                output.writeBool(7, badAirQualityDetected_);
+                output.writeBool(5, badAirQualityDetected_);
             }
             getUnknownFields().writeTo(output);
         }
@@ -251,31 +205,23 @@ public final class ReadingBuffer {
             size = 0;
             if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(1, sensorId_);
+                        .computeBytesSize(1, temperature_);
             }
             if (((bitField0_ & 0x00000002) == 0x00000002)) {
                 size += com.google.protobuf.CodedOutputStream
-                        .computeInt64Size(2, timestamp_);
+                        .computeInt32Size(2, windSpeed_);
             }
             if (((bitField0_ & 0x00000004) == 0x00000004)) {
                 size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(3, temperature_);
+                        .computeBytesSize(3, getWindDirectionBytes());
             }
             if (((bitField0_ & 0x00000008) == 0x00000008)) {
                 size += com.google.protobuf.CodedOutputStream
-                        .computeInt32Size(4, windSpeed_);
+                        .computeBytesSize(4, humidity_);
             }
             if (((bitField0_ & 0x00000010) == 0x00000010)) {
                 size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(5, getWindDirectionBytes());
-            }
-            if (((bitField0_ & 0x00000020) == 0x00000020)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBytesSize(6, humidity_);
-            }
-            if (((bitField0_ & 0x00000040) == 0x00000040)) {
-                size += com.google.protobuf.CodedOutputStream
-                        .computeBoolSize(7, badAirQualityDetected_);
+                        .computeBoolSize(5, badAirQualityDetected_);
             }
             size += getUnknownFields().getSerializedSize();
             memoizedSerializedSize = size;
@@ -396,12 +342,12 @@ public final class ReadingBuffer {
                 implements com.jeklsoft.cassandraclient.ReadingBuffer.ReadingOrBuilder {
             public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-                return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_hector_Reading_descriptor;
+                return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_cassandraclient_Reading_descriptor;
             }
 
             protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-                return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_hector_Reading_fieldAccessorTable;
+                return com.jeklsoft.cassandraclient.ReadingBuffer.internal_static_com_jeklsoft_cassandraclient_Reading_fieldAccessorTable;
             }
 
             // Construct using com.jeklsoft.cassandraclient.ReadingBuffer.Reading.newBuilder()
@@ -425,20 +371,16 @@ public final class ReadingBuffer {
 
             public Builder clear() {
                 super.clear();
-                sensorId_ = com.google.protobuf.ByteString.EMPTY;
-                bitField0_ = (bitField0_ & ~0x00000001);
-                timestamp_ = 0L;
-                bitField0_ = (bitField0_ & ~0x00000002);
                 temperature_ = com.google.protobuf.ByteString.EMPTY;
-                bitField0_ = (bitField0_ & ~0x00000004);
+                bitField0_ = (bitField0_ & ~0x00000001);
                 windSpeed_ = 0;
-                bitField0_ = (bitField0_ & ~0x00000008);
+                bitField0_ = (bitField0_ & ~0x00000002);
                 windDirection_ = "";
-                bitField0_ = (bitField0_ & ~0x00000010);
+                bitField0_ = (bitField0_ & ~0x00000004);
                 humidity_ = com.google.protobuf.ByteString.EMPTY;
-                bitField0_ = (bitField0_ & ~0x00000020);
+                bitField0_ = (bitField0_ & ~0x00000008);
                 badAirQualityDetected_ = false;
-                bitField0_ = (bitField0_ & ~0x00000040);
+                bitField0_ = (bitField0_ & ~0x00000010);
                 return this;
             }
 
@@ -480,29 +422,21 @@ public final class ReadingBuffer {
                 if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
                     to_bitField0_ |= 0x00000001;
                 }
-                result.sensorId_ = sensorId_;
+                result.temperature_ = temperature_;
                 if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
                     to_bitField0_ |= 0x00000002;
                 }
-                result.timestamp_ = timestamp_;
+                result.windSpeed_ = windSpeed_;
                 if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
                     to_bitField0_ |= 0x00000004;
                 }
-                result.temperature_ = temperature_;
+                result.windDirection_ = windDirection_;
                 if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
                     to_bitField0_ |= 0x00000008;
                 }
-                result.windSpeed_ = windSpeed_;
+                result.humidity_ = humidity_;
                 if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
                     to_bitField0_ |= 0x00000010;
-                }
-                result.windDirection_ = windDirection_;
-                if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
-                    to_bitField0_ |= 0x00000020;
-                }
-                result.humidity_ = humidity_;
-                if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
-                    to_bitField0_ |= 0x00000040;
                 }
                 result.badAirQualityDetected_ = badAirQualityDetected_;
                 result.bitField0_ = to_bitField0_;
@@ -522,12 +456,6 @@ public final class ReadingBuffer {
 
             public Builder mergeFrom(com.jeklsoft.cassandraclient.ReadingBuffer.Reading other) {
                 if (other == com.jeklsoft.cassandraclient.ReadingBuffer.Reading.getDefaultInstance()) return this;
-                if (other.hasSensorId()) {
-                    setSensorId(other.getSensorId());
-                }
-                if (other.hasTimestamp()) {
-                    setTimestamp(other.getTimestamp());
-                }
                 if (other.hasTemperature()) {
                     setTemperature(other.getTemperature());
                 }
@@ -548,10 +476,6 @@ public final class ReadingBuffer {
             }
 
             public final boolean isInitialized() {
-                if (!hasSensorId()) {
-
-                    return false;
-                }
                 return true;
             }
 
@@ -580,36 +504,26 @@ public final class ReadingBuffer {
                     }
                     case 10: {
                         bitField0_ |= 0x00000001;
-                        sensorId_ = input.readBytes();
+                        temperature_ = input.readBytes();
                         break;
                     }
                     case 16: {
                         bitField0_ |= 0x00000002;
-                        timestamp_ = input.readInt64();
+                        windSpeed_ = input.readInt32();
                         break;
                     }
                     case 26: {
                         bitField0_ |= 0x00000004;
-                        temperature_ = input.readBytes();
-                        break;
-                    }
-                    case 32: {
-                        bitField0_ |= 0x00000008;
-                        windSpeed_ = input.readInt32();
-                        break;
-                    }
-                    case 42: {
-                        bitField0_ |= 0x00000010;
                         windDirection_ = input.readBytes();
                         break;
                     }
-                    case 50: {
-                        bitField0_ |= 0x00000020;
+                    case 34: {
+                        bitField0_ |= 0x00000008;
                         humidity_ = input.readBytes();
                         break;
                     }
-                    case 56: {
-                        bitField0_ |= 0x00000040;
+                    case 40: {
+                        bitField0_ |= 0x00000010;
                         badAirQualityDetected_ = input.readBool();
                         break;
                     }
@@ -619,64 +533,11 @@ public final class ReadingBuffer {
 
             private int bitField0_;
 
-            // required bytes sensor_id = 1;
-            private com.google.protobuf.ByteString sensorId_ = com.google.protobuf.ByteString.EMPTY;
-
-            public boolean hasSensorId() {
-                return ((bitField0_ & 0x00000001) == 0x00000001);
-            }
-
-            public com.google.protobuf.ByteString getSensorId() {
-                return sensorId_;
-            }
-
-            public Builder setSensorId(com.google.protobuf.ByteString value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                bitField0_ |= 0x00000001;
-                sensorId_ = value;
-                onChanged();
-                return this;
-            }
-
-            public Builder clearSensorId() {
-                bitField0_ = (bitField0_ & ~0x00000001);
-                sensorId_ = getDefaultInstance().getSensorId();
-                onChanged();
-                return this;
-            }
-
-            // optional int64 timestamp = 2;
-            private long timestamp_;
-
-            public boolean hasTimestamp() {
-                return ((bitField0_ & 0x00000002) == 0x00000002);
-            }
-
-            public long getTimestamp() {
-                return timestamp_;
-            }
-
-            public Builder setTimestamp(long value) {
-                bitField0_ |= 0x00000002;
-                timestamp_ = value;
-                onChanged();
-                return this;
-            }
-
-            public Builder clearTimestamp() {
-                bitField0_ = (bitField0_ & ~0x00000002);
-                timestamp_ = 0L;
-                onChanged();
-                return this;
-            }
-
-            // optional bytes temperature = 3;
+            // optional bytes temperature = 1;
             private com.google.protobuf.ByteString temperature_ = com.google.protobuf.ByteString.EMPTY;
 
             public boolean hasTemperature() {
-                return ((bitField0_ & 0x00000004) == 0x00000004);
+                return ((bitField0_ & 0x00000001) == 0x00000001);
             }
 
             public com.google.protobuf.ByteString getTemperature() {
@@ -687,24 +548,24 @@ public final class ReadingBuffer {
                 if (value == null) {
                     throw new NullPointerException();
                 }
-                bitField0_ |= 0x00000004;
+                bitField0_ |= 0x00000001;
                 temperature_ = value;
                 onChanged();
                 return this;
             }
 
             public Builder clearTemperature() {
-                bitField0_ = (bitField0_ & ~0x00000004);
+                bitField0_ = (bitField0_ & ~0x00000001);
                 temperature_ = getDefaultInstance().getTemperature();
                 onChanged();
                 return this;
             }
 
-            // optional int32 wind_speed = 4;
+            // optional int32 wind_speed = 2;
             private int windSpeed_;
 
             public boolean hasWindSpeed() {
-                return ((bitField0_ & 0x00000008) == 0x00000008);
+                return ((bitField0_ & 0x00000002) == 0x00000002);
             }
 
             public int getWindSpeed() {
@@ -712,24 +573,24 @@ public final class ReadingBuffer {
             }
 
             public Builder setWindSpeed(int value) {
-                bitField0_ |= 0x00000008;
+                bitField0_ |= 0x00000002;
                 windSpeed_ = value;
                 onChanged();
                 return this;
             }
 
             public Builder clearWindSpeed() {
-                bitField0_ = (bitField0_ & ~0x00000008);
+                bitField0_ = (bitField0_ & ~0x00000002);
                 windSpeed_ = 0;
                 onChanged();
                 return this;
             }
 
-            // optional string wind_direction = 5;
+            // optional string wind_direction = 3;
             private java.lang.Object windDirection_ = "";
 
             public boolean hasWindDirection() {
-                return ((bitField0_ & 0x00000010) == 0x00000010);
+                return ((bitField0_ & 0x00000004) == 0x00000004);
             }
 
             public String getWindDirection() {
@@ -748,30 +609,30 @@ public final class ReadingBuffer {
                 if (value == null) {
                     throw new NullPointerException();
                 }
-                bitField0_ |= 0x00000010;
+                bitField0_ |= 0x00000004;
                 windDirection_ = value;
                 onChanged();
                 return this;
             }
 
             public Builder clearWindDirection() {
-                bitField0_ = (bitField0_ & ~0x00000010);
+                bitField0_ = (bitField0_ & ~0x00000004);
                 windDirection_ = getDefaultInstance().getWindDirection();
                 onChanged();
                 return this;
             }
 
             void setWindDirection(com.google.protobuf.ByteString value) {
-                bitField0_ |= 0x00000010;
+                bitField0_ |= 0x00000004;
                 windDirection_ = value;
                 onChanged();
             }
 
-            // optional bytes humidity = 6;
+            // optional bytes humidity = 4;
             private com.google.protobuf.ByteString humidity_ = com.google.protobuf.ByteString.EMPTY;
 
             public boolean hasHumidity() {
-                return ((bitField0_ & 0x00000020) == 0x00000020);
+                return ((bitField0_ & 0x00000008) == 0x00000008);
             }
 
             public com.google.protobuf.ByteString getHumidity() {
@@ -782,24 +643,24 @@ public final class ReadingBuffer {
                 if (value == null) {
                     throw new NullPointerException();
                 }
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000008;
                 humidity_ = value;
                 onChanged();
                 return this;
             }
 
             public Builder clearHumidity() {
-                bitField0_ = (bitField0_ & ~0x00000020);
+                bitField0_ = (bitField0_ & ~0x00000008);
                 humidity_ = getDefaultInstance().getHumidity();
                 onChanged();
                 return this;
             }
 
-            // optional bool bad_air_quality_detected = 7;
+            // optional bool bad_air_quality_detected = 5;
             private boolean badAirQualityDetected_;
 
             public boolean hasBadAirQualityDetected() {
-                return ((bitField0_ & 0x00000040) == 0x00000040);
+                return ((bitField0_ & 0x00000010) == 0x00000010);
             }
 
             public boolean getBadAirQualityDetected() {
@@ -807,14 +668,14 @@ public final class ReadingBuffer {
             }
 
             public Builder setBadAirQualityDetected(boolean value) {
-                bitField0_ |= 0x00000040;
+                bitField0_ |= 0x00000010;
                 badAirQualityDetected_ = value;
                 onChanged();
                 return this;
             }
 
             public Builder clearBadAirQualityDetected() {
-                bitField0_ = (bitField0_ & ~0x00000040);
+                bitField0_ = (bitField0_ & ~0x00000010);
                 badAirQualityDetected_ = false;
                 onChanged();
                 return this;
@@ -832,10 +693,10 @@ public final class ReadingBuffer {
     }
 
     private static com.google.protobuf.Descriptors.Descriptor
-            internal_static_com_jeklsoft_hector_Reading_descriptor;
+            internal_static_com_jeklsoft_cassandraclient_Reading_descriptor;
     private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internal_static_com_jeklsoft_hector_Reading_fieldAccessorTable;
+            internal_static_com_jeklsoft_cassandraclient_Reading_fieldAccessorTable;
 
     public static com.google.protobuf.Descriptors.FileDescriptor
     getDescriptor() {
@@ -847,25 +708,24 @@ public final class ReadingBuffer {
 
     static {
         java.lang.String[] descriptorData = {
-                "\n\024reading_buffer.proto\022\023com.jeklsoft.hec" +
-                        "tor\"\244\001\n\007Reading\022\021\n\tsensor_id\030\001 \002(\014\022\021\n\tti" +
-                        "mestamp\030\002 \001(\003\022\023\n\013temperature\030\003 \001(\014\022\022\n\nwi" +
-                        "nd_speed\030\004 \001(\005\022\026\n\016wind_direction\030\005 \001(\t\022\020" +
-                        "\n\010humidity\030\006 \001(\014\022 \n\030bad_air_quality_dete" +
-                        "cted\030\007 \001(\010B$\n\023com.jeklsoft.hectorB\rReadi" +
-                        "ngBuffer"
+                "\n\024reading_buffer.proto\022\034com.jeklsoft.cas" +
+                        "sandraclient\"~\n\007Reading\022\023\n\013temperature\030\001" +
+                        " \001(\014\022\022\n\nwind_speed\030\002 \001(\005\022\026\n\016wind_directi" +
+                        "on\030\003 \001(\t\022\020\n\010humidity\030\004 \001(\014\022 \n\030bad_air_qu" +
+                        "ality_detected\030\005 \001(\010B-\n\034com.jeklsoft.cas" +
+                        "sandraclientB\rReadingBuffer"
         };
         com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
                 new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
                     public com.google.protobuf.ExtensionRegistry assignDescriptors(
                             com.google.protobuf.Descriptors.FileDescriptor root) {
                         descriptor = root;
-                        internal_static_com_jeklsoft_hector_Reading_descriptor =
+                        internal_static_com_jeklsoft_cassandraclient_Reading_descriptor =
                                 getDescriptor().getMessageTypes().get(0);
-                        internal_static_com_jeklsoft_hector_Reading_fieldAccessorTable = new
+                        internal_static_com_jeklsoft_cassandraclient_Reading_fieldAccessorTable = new
                                 com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-                                internal_static_com_jeklsoft_hector_Reading_descriptor,
-                                new java.lang.String[]{"SensorId", "Timestamp", "Temperature", "WindSpeed", "WindDirection", "Humidity", "BadAirQualityDetected",},
+                                internal_static_com_jeklsoft_cassandraclient_Reading_descriptor,
+                                new java.lang.String[]{"Temperature", "WindSpeed", "WindDirection", "Humidity", "BadAirQualityDetected",},
                                 com.jeklsoft.cassandraclient.ReadingBuffer.Reading.class,
                                 com.jeklsoft.cassandraclient.ReadingBuffer.Reading.Builder.class);
                         return null;

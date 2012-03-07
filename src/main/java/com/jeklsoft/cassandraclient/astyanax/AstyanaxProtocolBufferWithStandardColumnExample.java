@@ -93,7 +93,8 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
             Iterator ii = columns.iterator();
             while (ii.hasNext()) {
                 Column column = (Column) ii.next();
-                Reading reading = (Reading) column.getValue(ReadingSerializer.get());
+                DateTime timestamp = (DateTime) column.getName();
+                Reading reading = new Reading(sensorId, timestamp, (Reading) column.getValue(ReadingSerializer.get()));
                 readings.add(reading);
             }
         }

@@ -1,0 +1,26 @@
+Three examples of how to access a Cassandra data store using Java.
+
+The model for the data we want to store is based on a set of atmospheric sensors that collect time series data collected on a reasonably quick interval (minutes). The fields of the modeled entity have been chosen to demonstrate how to store heterogeneous data types (most examples just use strings, boring).
+
+A set of slides and a video presentation will be forthcoming for this project. This README will be updated with links.
+
+Example 1: Accessing a datastore that uses Cassandra super columns to store the various fields of the entity using the Hector library.
+
+Example 2: Accessing a datastore that uses normal Cassandra columns, packing the entity in a protocol buffer using the Hector library.
+
+Example 3: Accessing a datastore that uses normal Cassandra columns, packing the entity in a protocol buffer using the Astyanax library.
+
+To run this example (assumes you have Maven 3 installed):
+
+Clone the repo on your local machine
+At the top level of the project, run:
+
+> mvn clean install
+
+All tests should pass. Review tests to see how to use the examples.
+
+Note: To run these examples, you do no need to install Cassandra, as the tests use embedded Cassandra. The preso will cover how to use these examples with a non-embedded Cassandra instance.
+
+More to come, hope this is helpful...
+
+Joe

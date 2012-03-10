@@ -34,6 +34,7 @@ public class BaseReadingsTest {
     protected static final String configurationPath = "target/cassandra";
     protected static final String cassandraHostname = "localhost";
     protected static final Integer cassandraPort = 9160;
+    protected static final Integer cassandraEmbeddedPort = 9161;
     protected static final String cassandraKeySpaceName = "Climate";
     protected static final String cassandraClusterName = "SensorNet";
     protected static final String columnFamilyName = "BoulderSensors";

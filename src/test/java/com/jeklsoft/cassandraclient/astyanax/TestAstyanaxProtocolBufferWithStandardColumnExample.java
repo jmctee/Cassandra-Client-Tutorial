@@ -47,25 +47,29 @@ public class TestAstyanaxProtocolBufferWithStandardColumnExample extends BaseRea
     private static Keyspace keyspace;
     private static ColumnFamily<UUID, DateTime> CF_USER_INFO;
 
+    private static int port = cassandraPort;
+
     @BeforeClass
     public static void configureCassandra() throws Exception {
 
         if (useEmbeddedCassandra) {
+            port = cassandraEmbeddedPort;
+
             List<String> cassandraCommands = new ArrayList<String>();
             cassandraCommands.add("create keyspace " + cassandraKeySpaceName + ";");
             cassandraCommands.add("use " + cassandraKeySpaceName + ";");
             cassandraCommands.add("create column family " + columnFamilyName + ";");
 
             TestUtils.initializeEmbeddedCassandra(configurationPath, cassandraCommands,
-                    cassandraHostname, cassandraPort);
+                    cassandraHostname, port);
         }
 
         AstyanaxConfiguration configuration = new AstyanaxConfigurationImpl().setDiscoveryType(NodeDiscoveryType.NONE);
 
         ConnectionPoolConfiguration connectionPoolConfiguration = new ConnectionPoolConfigurationImpl("AstyanaxPool")
-                .setPort(cassandraPort)
+                .setPort(port)
                 .setMaxConnsPerHost(1)
-                .setSeeds(cassandraHostname + ":" + cassandraPort);
+                .setSeeds(cassandraHostname + ":" + port);
 
         ConnectionPoolMonitor connectionPoolMonitor = new CountingConnectionPoolMonitor();
 

@@ -33,14 +33,18 @@ public class TestHectorProtocolBufferWithStandardColumnExample extends HectorTes
     public static void configureCassandra() throws Exception {
         List<String> cassandraCommands = null;
 
+        int port = cassandraPort;
+
         if (useEmbeddedCassandra) {
             cassandraCommands = new ArrayList<String>();
             cassandraCommands.add("create keyspace " + cassandraKeySpaceName + ";");
             cassandraCommands.add("use " + cassandraKeySpaceName + ";");
             cassandraCommands.add("create column family " + columnFamilyName + ";");
+
+            port = cassandraEmbeddedPort;
         }
 
-        keyspace = configureHectorAccessToCassandra(cassandraHostname, cassandraPort, cassandraClusterName,
+        keyspace = configureHectorAccessToCassandra(cassandraHostname, port, cassandraClusterName,
                 cassandraKeySpaceName, configurationPath, cassandraCommands);
     }
 

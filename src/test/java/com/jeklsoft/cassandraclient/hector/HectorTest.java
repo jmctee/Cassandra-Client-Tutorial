@@ -14,12 +14,14 @@
 
 package com.jeklsoft.cassandraclient.hector;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.jeklsoft.cassandraclient.BaseReadingsTest;
-import com.jeklsoft.cassandraclient.TestUtils;
+import com.jeklsoft.cassandraclient.EmbeddedCassandra;
 
 import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.hector.api.Cluster;
@@ -33,7 +35,17 @@ public class HectorTest extends BaseReadingsTest {
 
         try {
             if (StringUtils.isNotEmpty(configurationPath) && (cassandraCommands != null) && (!cassandraCommands.isEmpty())) {
-                TestUtils.initializeEmbeddedCassandra(configurationPath, cassandraCommands, cassandraHostname, cassandraPort);
+                URL stream = HectorTest.class.getClassLoader().getResource("cassandra.yaml");
+                File cassandraYaml = new File(stream.toURI());
+
+                EmbeddedCassandra.builder()
+                        .withCleanDataStore()
+                        .withStartupCommands(cassandraCommands)
+                        .withHostname(cassandraHostname)
+                        .withHostport(cassandraPort)
+                        .withCassandaConfigurationDirectoryPath(configurationPath)
+                        .withCassandaYamlFile(cassandraYaml)
+                        .build();
             }
 
             CassandraHostConfigurator configurator = new CassandraHostConfigurator(cassandraHostname + ":" + cassandraPort);

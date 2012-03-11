@@ -14,16 +14,18 @@
 
 package com.jeklsoft.cassandraclient;
 
+import static org.apache.commons.io.FileUtils.copyFileToDirectory;
+import static org.apache.commons.io.FileUtils.deleteDirectory;
+import static org.apache.commons.io.FileUtils.forceMkdir;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.cassandra.cli.CliMain;
 import org.apache.cassandra.config.DatabaseDescriptor;
-import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.service.EmbeddedCassandraService;
 
 public class EmbeddedCassandra {
@@ -32,7 +34,8 @@ public class EmbeddedCassandra {
 
     private boolean cleanCassandra = false;
     private String hostname = "localhost";
-    private int hostport = 9160;
+    private int hostport = 9161;
+    private File cassandraYaml = null;
 
     public static EmbeddedCassandraBuilder builder() {
         return new EmbeddedCassandraBuilder();
@@ -63,6 +66,11 @@ public class EmbeddedCassandra {
 
         public EmbeddedCassandraBuilder withCassandaConfigurationDirectoryPath(String path) {
             instance.setCassandraConfigDirPath(path);
+            return this;
+        }
+
+        public EmbeddedCassandraBuilder withCassandaYamlFile(File cassandraYaml) {
+            instance.setCassandraYamlFile(cassandraYaml);
             return this;
         }
 
@@ -103,7 +111,7 @@ public class EmbeddedCassandra {
             System.setProperty("cassandra.config", configFileName);
         }
         else {
-            throw new IOException("Neither cassandraConfigDirResource nor cassandraConfigDirPath is configured, bailing.");
+            throw new IOException("CassandraConfigDirPath is not configured, bailing.");
         }
     }
 
@@ -127,6 +135,10 @@ public class EmbeddedCassandra {
         this.cleanCassandra = cleanCassandra;
     }
 
+    private void setCassandraYamlFile(File cassandraYaml) {
+        this.cassandraYaml = cassandraYaml;
+    }
+
     private void executeCommands() {
         CliMain.connect(hostname, hostport);
 
@@ -144,47 +156,24 @@ public class EmbeddedCassandra {
 
     private void clean() throws IOException {
         cleanupDataDirectories();
+        initializeCassandraYaml();
         makeDirsIfNotExist();
     }
 
     private void cleanupDataDirectories() throws IOException {
-        for (String s : getDataDirs()) {
-            cleanDir(s);
+        deleteDirectory(new File(cassandraConfigDirPath));
+    }
+
+    private void initializeCassandraYaml() throws IOException {
+        if (cassandraYaml != null) {
+            copyFileToDirectory(cassandraYaml, new File(cassandraConfigDirPath));
         }
     }
 
     private void makeDirsIfNotExist() throws IOException {
-        for (String s : getDataDirs()) {
-            mkdir(s);
+        for (String s : Arrays.asList(DatabaseDescriptor.getAllDataFileLocations())) {
+            forceMkdir(new File(s));
         }
-    }
-
-    private Set<String> getDataDirs() {
-        Set<String> dirs = new HashSet<String>();
-        for (String s : DatabaseDescriptor.getAllDataFileLocations()) {
-            dirs.add(s);
-        }
-        dirs.add(DatabaseDescriptor.getCommitLogLocation());
-        return dirs;
-    }
-
-    private void mkdir(String dir) throws IOException {
-        FileUtils.createDirectory(dir);
-    }
-
-    private void cleanDir(String dir) throws IOException {
-        File dirFile = new File(dir);
-        deleteDir(dirFile);
-    }
-
-    private void deleteDir(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                deleteDir(new File(dir, children[i]));
-            }
-        }
-
-        dir.delete();
+        forceMkdir(new File(DatabaseDescriptor.getCommitLogLocation()));
     }
 }

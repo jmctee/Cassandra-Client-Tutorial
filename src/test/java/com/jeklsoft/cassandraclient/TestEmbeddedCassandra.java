@@ -21,28 +21,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestEmbeddedCassandra {
 
     private static final String embeddedCassandraHostname = "localhost";
-    private static final Integer embeddedCassandraPort = 9160;
+    private static final Integer embeddedCassandraPort = 9161;
     private static final String embeddedCassandraKeySpaceName = "TestKeyspaceName";
     private static final String columnFamilyName = "TestColumnName";
     private static final String configurationPath = "target/cassandra";
-
-    @BeforeClass
-    public static void configureCassandra() throws Exception {
-
-        FileUtils.deleteDirectory(new File(configurationPath));
-
-        URL cassandraYamlUrl = TestEmbeddedCassandra.class.getClassLoader().getResource("cassandra.yaml");
-        File cassandraYamlFile = new File(cassandraYamlUrl.toURI());
-
-        FileUtils.copyFileToDirectory(cassandraYamlFile, new File(configurationPath));
-    }
 
     @Test
     public void sunnyDayTest() throws Exception {
@@ -51,12 +38,16 @@ public class TestEmbeddedCassandra {
         cassandraCommands.add("use " + embeddedCassandraKeySpaceName + ";");
         cassandraCommands.add("create column family " + columnFamilyName + " with column_type = 'Super';");
 
+        URL cassandraYamlUrl = TestEmbeddedCassandra.class.getClassLoader().getResource("cassandra.yaml");
+        File cassandraYamlFile = new File(cassandraYamlUrl.toURI());
+
         EmbeddedCassandra embeddedCassandra = EmbeddedCassandra.builder()
                 .withCleanDataStore()
                 .withStartupCommands(cassandraCommands)
                 .withHostname(embeddedCassandraHostname)
                 .withHostport(embeddedCassandraPort)
                 .withCassandaConfigurationDirectoryPath(configurationPath)
+                .withCassandaYamlFile(cassandraYamlFile)
                 .build();
 
         assertNotNull(embeddedCassandra);

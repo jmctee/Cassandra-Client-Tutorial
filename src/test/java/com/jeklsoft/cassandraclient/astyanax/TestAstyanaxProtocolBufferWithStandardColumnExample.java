@@ -14,6 +14,8 @@
 
 package com.jeklsoft.cassandraclient.astyanax;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +26,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.jeklsoft.cassandraclient.BaseReadingsTest;
-import com.jeklsoft.cassandraclient.TestUtils;
+import com.jeklsoft.cassandraclient.EmbeddedCassandra;
 import com.netflix.astyanax.AstyanaxConfiguration;
 import com.netflix.astyanax.AstyanaxContext;
 import com.netflix.astyanax.Keyspace;
@@ -60,8 +62,17 @@ public class TestAstyanaxProtocolBufferWithStandardColumnExample extends BaseRea
             cassandraCommands.add("use " + cassandraKeySpaceName + ";");
             cassandraCommands.add("create column family " + columnFamilyName + ";");
 
-            TestUtils.initializeEmbeddedCassandra(configurationPath, cassandraCommands,
-                    cassandraHostname, port);
+            URL stream = TestAstyanaxProtocolBufferWithStandardColumnExample.class.getClassLoader().getResource("cassandra.yaml");
+            File cassandraYaml = new File(stream.toURI());
+
+            EmbeddedCassandra.builder()
+                    .withCleanDataStore()
+                    .withStartupCommands(cassandraCommands)
+                    .withHostname(cassandraHostname)
+                    .withHostport(port)
+                    .withCassandaConfigurationDirectoryPath(configurationPath)
+                    .withCassandaYamlFile(cassandraYaml)
+                    .build();
         }
 
         AstyanaxConfiguration configuration = new AstyanaxConfigurationImpl().setDiscoveryType(NodeDiscoveryType.NONE);

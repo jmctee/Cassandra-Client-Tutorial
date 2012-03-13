@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -78,9 +80,20 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
         }
 
         try {
-            OperationResult<Void> result = m.execute();
+            // note: you still have access to m.execute() if you don't need async feature.
+            Future<OperationResult<Void>> future = m.executeAsync();
+
+            // do some other stuff here...
+
+            OperationResult<Void> result = future.get();
         }
         catch (ConnectionException e) {
+            throw new RuntimeException("Storage of readings failed", e);
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException("Storage of readings failed", e);
+        }
+        catch (ExecutionException e) {
             throw new RuntimeException("Storage of readings failed", e);
         }
     }
@@ -101,8 +114,15 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
                 .withColumnRange(range);
 
         try {
-            OperationResult result = query.execute();
-            ColumnList columns = (ColumnList) result.getResult();
+            // Again query.execute() is available here is synchronous behavior desired.
+
+            Future<OperationResult<ColumnList<DateTime>>> future = query.executeAsync();
+
+            // time passes...
+
+            OperationResult<ColumnList<DateTime>> result = future.get();
+
+            ColumnList columns = result.getResult();
 
             Iterator ii = columns.iterator();
             while (ii.hasNext()) {
@@ -113,6 +133,12 @@ public class AstyanaxProtocolBufferWithStandardColumnExample implements Readings
             }
         }
         catch (ConnectionException e) {
+            throw new RuntimeException("Query failed", e);
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException("Query failed", e);
+        }
+        catch (ExecutionException e) {
             throw new RuntimeException("Query failed", e);
         }
 

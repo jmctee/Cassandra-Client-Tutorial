@@ -22,7 +22,7 @@ Example 1: Accessing a datastore that uses Cassandra super columns to store the 
 
 Example 2: Accessing a datastore that uses normal Cassandra columns, packing the entity in a protocol buffer using the Hector library.
 
-Example 3: Accessing a datastore that uses normal Cassandra columns, packing the entity in a protocol buffer using the Astyanax library.
+Example 3: Accessing a datastore that uses normal Cassandra columns, packing the entity in a protocol buffer using the Astyanax library and asynchronous API.
 
 To run this example (assumes you have Maven 3 installed):
 

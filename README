@@ -33,6 +33,8 @@ At the top level of the project, run:
 
 All tests should pass. Review tests to see how to use the examples.
 
+A PDF version of the slides for the presentation that goes with this code can be found in the slides directory. In addition, the slides can be viewed at http://www.slideshare.net/jmctee/cassandra-clienttutorial.
+
 Note: To run these examples, you do no need to install Cassandra, as the tests use embedded Cassandra. The preso will cover how to use these examples with a non-embedded Cassandra instance.
 
 More to come, hope this is helpful...

@@ -26,25 +26,25 @@ import me.prettyprint.hector.api.Serializer;
 public class TestDateTimeSerializer {
     @Test
     public void DateTimeObjectShouldReturnDateTimeSerializer() {
-        ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
         DateTime value = new DateTime();
-        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(value);
+        Serializer serializer = ExtensibleTypeInferringSerializer.getSerializer(value);
         assertEquals(serializer.getClass(), DateTimeSerializer.class);
     }
 
     @Test
     public void DateTimeClassShouldReturnDateTimeSerializer() {
-        ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
-        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(DateTime.class);
+        ExtensibleTypeInferringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
+        Serializer serializer = ExtensibleTypeInferringSerializer.getSerializer(DateTime.class);
         assertEquals(serializer.getClass(), DateTimeSerializer.class);
     }
 
     @Test
     public void SerializingThenDeserializingDateTimeResultsInSameDateTime() {
-        ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
         DateTime value = new DateTime(2000, 1, 1, 12, 0);
 
-        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(DateTime.class);
+        Serializer serializer = ExtensibleTypeInferringSerializer.getSerializer(DateTime.class);
 
         ByteBuffer buffer = serializer.toByteBuffer(value);
 

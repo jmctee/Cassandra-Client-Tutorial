@@ -74,10 +74,10 @@ public class HectorProtocolBufferWithStandardColumnExample implements ReadingsPe
         this.keyspace = keyspace;
         this.columnFamilyName = columnFamilyName;
 
-        ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
-        ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
-        ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
-        ExtensibleTypeInferrringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
     }
 
     @Override

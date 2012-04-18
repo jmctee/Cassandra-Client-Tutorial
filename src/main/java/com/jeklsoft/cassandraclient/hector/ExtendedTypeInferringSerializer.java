@@ -31,7 +31,7 @@ public class ExtendedTypeInferringSerializer<T> extends AbstractSerializer<T> im
 
     @Override
     public ByteBuffer toByteBuffer(T obj) {
-        return ExtensibleTypeInferrringSerializer.getSerializer(obj).toByteBuffer(obj);
+        return ExtensibleTypeInferringSerializer.getSerializer(obj).toByteBuffer(obj);
     }
 
     @Override

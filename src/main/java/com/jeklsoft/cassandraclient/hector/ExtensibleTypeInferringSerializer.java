@@ -35,7 +35,7 @@ import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.cassandra.serializers.UUIDSerializer;
 import me.prettyprint.hector.api.Serializer;
 
-public class ExtensibleTypeInferrringSerializer {
+public class ExtensibleTypeInferringSerializer {
 
     private static Map<Class<?>, AbstractSerializer> serializers = new HashMap<Class<?>, AbstractSerializer>();
 

@@ -119,9 +119,9 @@ public class HectorHeterogeneousSuperColumnExample implements ReadingsPersistor 
         this.keyspace = keyspace;
         this.columnFamilyName = columnFamilyName;
 
-        ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
-        ExtensibleTypeInferrringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
-        ExtensibleTypeInferrringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(DateTime.class, DateTimeSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(BigDecimal.class, BigDecimalSerializer.get());
     }
 
     @Override

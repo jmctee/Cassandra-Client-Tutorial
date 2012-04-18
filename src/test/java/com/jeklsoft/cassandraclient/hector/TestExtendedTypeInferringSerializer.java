@@ -217,7 +217,7 @@ public class TestExtendedTypeInferringSerializer {
     //    BigInteger
     @Test
     public void bigIntegerObjectShouldReturnBigIntegerByteBuffer() {
-        ExtensibleTypeInferrringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(BigInteger.class, BigIntegerSerializer.get());
 
         BigInteger value = BigInteger.valueOf(0x0807060504030201L);
 

@@ -31,23 +31,23 @@ import me.prettyprint.hector.api.Serializer;
 public class TestReadingSerializer {
     @Test
     public void ReadingObjectShouldReturnReadingSerializer() {
-        ExtensibleTypeInferrringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
         Reading reading = new Reading(UUID.randomUUID(), new DateTime(), new BigDecimal(195).movePointLeft(1),
                 24, "ESE", BigInteger.valueOf(17L), false);
-        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(reading);
+        Serializer serializer = ExtensibleTypeInferringSerializer.getSerializer(reading);
         assertEquals(serializer.getClass(), ReadingSerializer.class);
     }
 
     @Test
     public void ReadingClassShouldReturnReadingSerializer() {
-        ExtensibleTypeInferrringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
-        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Reading.class);
+        ExtensibleTypeInferringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
+        Serializer serializer = ExtensibleTypeInferringSerializer.getSerializer(Reading.class);
         assertEquals(serializer.getClass(), ReadingSerializer.class);
     }
 
     @Test
     public void SerializingThenDeserializingReadingResultsInSameReading() {
-        ExtensibleTypeInferrringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
+        ExtensibleTypeInferringSerializer.addSerializer(Reading.class, ReadingSerializer.get());
 
         UUID uuid = UUID.randomUUID();
         DateTime date = new DateTime();
@@ -55,7 +55,7 @@ public class TestReadingSerializer {
         Reading reading = new Reading(uuid, date, new BigDecimal(195).movePointLeft(1),
                 24, "ESE", BigInteger.valueOf(17L), false);
 
-        Serializer serializer = ExtensibleTypeInferrringSerializer.getSerializer(Reading.class);
+        Serializer serializer = ExtensibleTypeInferringSerializer.getSerializer(Reading.class);
 
         ByteBuffer buffer = serializer.toByteBuffer(reading);
 

@@ -19,6 +19,8 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import javax.xml.bind.DatatypeConverter;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -68,6 +70,20 @@ public class TestReadingBuffer {
 
         assertEquals(reading, newReading);
 
+    }
+
+    @Test
+    public void canBase64EncodeDecodeReadings() throws Exception {
+        byte[] array = reading.toByteArray();
+        String string = reading.toString();
+        String encoded = DatatypeConverter.printBase64Binary(array);
+
+        byte[] decoded = DatatypeConverter.parseBase64Binary(encoded);
+        Reading newReading = ReadingBuffer.Reading.parseFrom(decoded);
+        String newString = newReading.toString();
+
+        assertEquals(reading, newReading);
+        assertEquals(string, newString);
     }
 
     private ReadingBuffer.Reading build() {
